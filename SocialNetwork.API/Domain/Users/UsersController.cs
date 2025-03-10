@@ -30,16 +30,16 @@ public class UsersController(
     [HttpPost]
     public async Task<IActionResult> CreateUser(
         [FromQuery] CreateUserRequest request,
-        CancellationToken cancellation = default)
+        CancellationToken cancellationToken = default)
     {
         var command = new CreateUserCommand(
             request.UserName,
             request.Email,
-            request.Password,
+            request.PasswordHash,
             request.ProfilePicturePath,
             request.Bio);
 
-        var id = await mediator.Send(command, default);
+        var id = await mediator.Send(command, cancellationToken);
         return Ok(id);
     }
 }

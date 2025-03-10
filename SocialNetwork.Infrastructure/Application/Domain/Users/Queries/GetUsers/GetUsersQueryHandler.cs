@@ -16,9 +16,10 @@ internal class GetUsersQueryHandler(
     {
         var sqlQuery = dbContext
             .Users
-            .AsNoTracking();
+            .AsNoTracking()
+            .Include(x => x.Posts);
 
-        var skip = request.PageSize * (request.PageSize - 1);
+        var skip = request.PageSize * (request.Page - 1);
         var count = sqlQuery.Count();
 
         var users = await sqlQuery
@@ -29,10 +30,17 @@ internal class GetUsersQueryHandler(
                 x.UserId,
                 x.UserName,
                 x.Email,
-                x.Password,
+                x.PasswordHash,
                 x.ProfilePicturePath,
                 x.Bio,
-                x.CreationTime))
+                x.CreationTime,
+                x.Posts
+                .Select(x => new PostDto(
+                    x.Title,
+                    x.Content,
+                    x.ImagePath))
+                .ToArray()
+                ))
             .ToArrayAsync(cancellationToken);
 
         return new PageResponse<UserDto[]>(count, users);

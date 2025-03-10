@@ -18,7 +18,7 @@ internal class CreateUserCommandHandler(
         var data = new CreateUserData(
             command.UserName,
             command.Email,
-            command.Password,
+            command.PasswordHash,
             command.ProfilePicturePath,
             command.Bio);
 

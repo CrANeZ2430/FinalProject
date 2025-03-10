@@ -5,4 +5,5 @@ public static class Routes
     private const string _prefix = "api";
 
     public const string Users = $"{_prefix}/users";
+    public const string Posts = $"{_prefix}/posts";
 }

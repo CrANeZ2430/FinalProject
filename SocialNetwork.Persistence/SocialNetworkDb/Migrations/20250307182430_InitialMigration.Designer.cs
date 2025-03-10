@@ -12,7 +12,7 @@ using SocialNetwork.Persistence.SocialNetworkDb;
 namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
 {
     [DbContext(typeof(SocialNetworkDbContext))]
-    [Migration("20250305164300_InitialMigration")]
+    [Migration("20250307182430_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -45,14 +45,15 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)");
 
                     b.Property<string>("ProfilePicturePath")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -60,6 +61,9 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users", "socialNetwork");
                 });

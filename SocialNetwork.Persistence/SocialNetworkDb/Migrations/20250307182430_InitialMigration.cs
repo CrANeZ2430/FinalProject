@@ -22,8 +22,8 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Password = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    ProfilePicturePath = table.Column<string>(type: "text", nullable: false),
+                    PasswordHash = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
+                    ProfilePicturePath = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Bio = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -31,6 +31,13 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                schema: "socialNetwork",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />

@@ -3,6 +3,6 @@
 public record CreateUserRequest(
     string UserName,
     string Email,
-    string Password,
+    string PasswordHash,
     string ProfilePicturePath,
     string Bio);

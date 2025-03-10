@@ -1,0 +1,50 @@
+﻿using SocialNetwork.Core.Domain.Posts.Data;
+using SocialNetwork.Core.Domain.Users.Models;
+
+namespace SocialNetwork.Core.Domain.Posts.Models;
+
+public class Post
+{
+    private readonly User _user;
+
+    private Post() { }
+
+    public Post(
+        Guid postId, 
+        Guid userId, 
+        string title, 
+        string content, 
+        string? imagePath, 
+        DateTime creationTime, 
+        DateTime updateTime)
+    {
+        PostId = postId;
+        UserId = userId;
+        Title = title;
+        Content = content;
+        ImagePath = imagePath;
+        CreationTime = creationTime;
+        UpdateTime = updateTime;
+    }
+
+    public Guid PostId { get; private set; }
+    public Guid UserId { get; private set; }
+    public string Title { get; private set; }
+    public string Content { get; private set; }
+    public string? ImagePath { get; private set; }
+    public DateTime CreationTime { get; private set; }
+    public DateTime UpdateTime { get; private set; }
+    public User User => _user;
+
+    public static Post Create(CreatePostData data)
+    {
+        return new Post(
+            Guid.NewGuid(),
+            data.UserId,
+            data.Title,
+            data.Content,
+            data.ImagePath,
+            DateTime.UtcNow,
+            DateTime.UtcNow);
+    }
+}

@@ -9,4 +9,5 @@ public record UserDto(
     string Password,
     string ProfilePicturePath,
     string Bio,
-    DateTime CreationDate);
+    DateTime CreationDate,
+    PostDto[] Posts);
