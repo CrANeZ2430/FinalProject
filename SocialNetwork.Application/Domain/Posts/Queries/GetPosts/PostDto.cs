@@ -4,8 +4,9 @@ public record PostDto(
     Guid PostId,
     string Title,
     string Content,
-    string? ImagePath,
+    string[]? ImagePath,
+    int PostLikeCount,
     DateTime CreationDate,
     DateTime UpdateTime,
-    UserDto User,
+    UserDto? User,
     CommentDto[] Comments);

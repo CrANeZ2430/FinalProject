@@ -10,12 +10,17 @@ internal class CommentEntityTypeConfiguration : IEntityTypeConfiguration<Comment
     {
         builder.HasKey(x => x.CommentId);
 
+        builder.Property(x => x.UserId)
+            .IsRequired(false);
+
         builder.Property(x => x.PostId)
             .IsRequired();
 
         builder.Property(x => x.Content)
             .HasMaxLength(2000)
             .IsRequired();
+
+        builder.Property(x => x.CommentLikeCount);
 
         builder.Property(x => x.CreationTime)
             .IsRequired();
@@ -26,12 +31,14 @@ internal class CommentEntityTypeConfiguration : IEntityTypeConfiguration<Comment
         builder.HasOne(x => x.Post)
             .WithMany(x => x.Comments)
             .HasForeignKey(x => x.PostId)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.SetNull)
+            .IsRequired(false);
 
         builder.HasOne(x => x.User)
             .WithMany(x => x.Comments)
             .HasForeignKey(x => x.UserId)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.SetNull)
+            .IsRequired(false);
 
         builder.Metadata
             .FindNavigation(nameof(Comment.User))!

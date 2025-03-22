@@ -13,7 +13,7 @@ public class CreateCommentCommandHandler(
 {
     public async Task<Guid> Handle(
         CreateCommentCommand command, 
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         var data = new CreateCommentData(
             command.UserId,
@@ -22,7 +22,7 @@ public class CreateCommentCommandHandler(
 
         var comment = Comment.Create(data);
         commentsRepository.Add(comment);
-        await unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return comment.CommentId;
     }

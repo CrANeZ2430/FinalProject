@@ -11,16 +11,28 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterColumn<string>(
+                name: "Bio",
+                schema: "socialNetwork",
+                table: "Users",
+                type: "character varying(2000)",
+                maxLength: 2000,
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "character varying(2000)",
+                oldMaxLength: 2000);
+
             migrationBuilder.CreateTable(
                 name: "Posts",
                 schema: "socialNetwork",
                 columns: table => new
                 {
                     PostId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true),
                     Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Content = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
-                    ImagePath = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    ImagePath = table.Column<string[]>(type: "text[]", maxLength: 255, nullable: true),
+                    PostLikeCount = table.Column<int>(type: "integer", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -33,7 +45,7 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                         principalSchema: "socialNetwork",
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,9 +54,10 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                 columns: table => new
                 {
                     CommentId = table.Column<Guid>(type: "uuid", nullable: false),
-                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true),
                     PostId = table.Column<Guid>(type: "uuid", nullable: false),
                     Content = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false),
+                    CommentLikeCount = table.Column<int>(type: "integer", nullable: false),
                     CreationTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -57,14 +70,14 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                         principalSchema: "socialNetwork",
                         principalTable: "Posts",
                         principalColumn: "PostId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Comments_Users_UserId",
                         column: x => x.UserId,
                         principalSchema: "socialNetwork",
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateIndex(
@@ -96,6 +109,19 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
             migrationBuilder.DropTable(
                 name: "Posts",
                 schema: "socialNetwork");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Bio",
+                schema: "socialNetwork",
+                table: "Users",
+                type: "character varying(2000)",
+                maxLength: 2000,
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "character varying(2000)",
+                oldMaxLength: 2000,
+                oldNullable: true);
         }
     }
 }

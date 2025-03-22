@@ -4,4 +4,4 @@ public record CreatePostData(
     Guid UserId,
     string Title,
     string Content,
-    string? ImagePath);
+    string[]? ImagePath);

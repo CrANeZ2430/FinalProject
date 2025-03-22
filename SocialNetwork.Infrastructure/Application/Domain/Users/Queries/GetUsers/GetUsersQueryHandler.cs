@@ -32,6 +32,7 @@ internal class GetUsersQueryHandler(
                         p.Title,
                         p.Content,
                         p.ImagePath,
+                        p.PostLikeCount,
                         p.Comments
                             .Select(c => new CommentDto(
                                 new CommentUserDto(
@@ -43,7 +44,8 @@ internal class GetUsersQueryHandler(
                                     c.User.Bio,
                                     c.User.CreationTime
                                 ),
-                                c.Content))
+                                c.Content,
+                                c.CommentLikeCount))
                             .ToArray()))
                     .ToArray()
             ))

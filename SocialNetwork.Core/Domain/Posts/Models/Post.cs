@@ -6,17 +6,17 @@ namespace SocialNetwork.Core.Domain.Posts.Models;
 
 public class Post
 {
-    private readonly User _user;
+    private readonly User? _user;
     private readonly List<Comment> _comments;
 
     private Post() { }
 
     public Post(
         Guid postId, 
-        Guid userId, 
+        Guid? userId, 
         string title, 
-        string content, 
-        string? imagePath, 
+        string content,
+        string[]? imagePath,
         DateTime creationTime, 
         DateTime updateTime)
     {
@@ -25,18 +25,20 @@ public class Post
         Title = title;
         Content = content;
         ImagePath = imagePath;
+        PostLikeCount = 0;
         CreationTime = creationTime;
         UpdateTime = updateTime;
     }
 
     public Guid PostId { get; private set; }
-    public Guid UserId { get; private set; }
+    public Guid? UserId { get; private set; }
     public string Title { get; private set; }
     public string Content { get; private set; }
-    public string? ImagePath { get; private set; }
+    public string[]? ImagePath { get; private set; }
+    public int PostLikeCount { get; private set; }
     public DateTime CreationTime { get; private set; }
     public DateTime UpdateTime { get; private set; }
-    public User User => _user;
+    public User? User => _user;
     public IReadOnlyCollection<Comment> Comments => _comments;
 
     public static Post Create(CreatePostData data)
@@ -49,5 +51,11 @@ public class Post
             data.ImagePath,
             DateTime.UtcNow,
             DateTime.UtcNow);
+    }
+
+    public void LikePost(bool isLike)
+    {
+        if(isLike) PostLikeCount++;
+        else PostLikeCount--;
     }
 }

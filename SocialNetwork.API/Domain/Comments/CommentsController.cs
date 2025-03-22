@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.Common.Constants;
 using SocialNetwork.API.Domain.Comments.Records;
 using SocialNetwork.Application.Domain.Comments.Commands.CreatePost;
+using SocialNetwork.Application.Domain.Comments.Commands.LikeComment;
 using SocialNetwork.Application.Domain.Comments.Queries.GetPostComments;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,8 +25,7 @@ public class CommentsController(
             page,
             pageSize);
 
-        var comments = await mediator.Send(query);
-
+        var comments = await mediator.Send(query, cancellationToken);
         return Ok(comments);
     }
 
@@ -39,7 +39,21 @@ public class CommentsController(
             request.PostId,
             request.Content);
 
-        var id = await mediator.Send(command);
+        var id = await mediator.Send(command, cancellationToken);
         return Ok(id);
+    }
+
+    [HttpPut("add-like/{commentId}")]
+    public async Task<IActionResult> LikeComment(
+        [FromRoute][Required] Guid commentId,
+        [FromQuery][Required] bool isLike,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new LikeCommentCommand(
+            commentId,
+            isLike);
+
+        await mediator.Send(command, cancellationToken);
+        return Ok();
     }
 }

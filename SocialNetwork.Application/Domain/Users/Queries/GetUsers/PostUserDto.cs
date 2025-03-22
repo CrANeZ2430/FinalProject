@@ -6,6 +6,6 @@ public record PostUserDto(
     string Email,
     string PasswordHash,
     string ProfilePicturePath,
-    string Bio,
+    string? Bio,
     DateTime CreationDate,
     PostDto[] Posts);

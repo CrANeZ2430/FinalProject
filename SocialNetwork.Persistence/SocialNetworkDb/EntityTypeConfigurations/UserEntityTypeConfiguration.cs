@@ -28,7 +28,8 @@ internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(255);
 
         builder.Property(x => x.Bio)
-            .HasMaxLength(2000);
+            .HasMaxLength(2000)
+            .IsRequired(false);
 
         builder.Property(x => x.CreationTime)
             .IsRequired();
@@ -36,12 +37,14 @@ internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany(x => x.Posts)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.SetNull)
+            .IsRequired(false);
 
         builder.HasMany(x => x.Comments)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.SetNull)
+            .IsRequired(false);
 
         builder.Metadata
             .FindNavigation(nameof(User.Posts))!

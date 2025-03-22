@@ -5,4 +5,4 @@ public record CreateUserRequest(
     string Email,
     string PasswordHash,
     string ProfilePicturePath,
-    string Bio);
+    string? Bio);

@@ -13,7 +13,7 @@ public class CreatePostCommandHandler(
 {
     public async Task<Guid> Handle(
         CreatePostCommand command, 
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         var data = new CreatePostData(
             command.UserId,
@@ -23,7 +23,7 @@ public class CreatePostCommandHandler(
 
         var post = Post.Create(data);
         postsRepository.Add(post);
-        await unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return post.PostId;
     }

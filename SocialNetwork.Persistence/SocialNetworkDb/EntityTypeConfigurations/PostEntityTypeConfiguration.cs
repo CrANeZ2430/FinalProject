@@ -11,7 +11,7 @@ internal class PostEntityTypeConfiguration : IEntityTypeConfiguration<Post>
         builder.HasKey(x => x.PostId);
 
         builder.Property(x => x.UserId)
-            .IsRequired();
+            .IsRequired(false);
 
         builder.Property(x => x.Title)
             .HasMaxLength(100)
@@ -22,7 +22,10 @@ internal class PostEntityTypeConfiguration : IEntityTypeConfiguration<Post>
             .IsRequired();
 
         builder.Property(x => x.ImagePath)
-            .HasMaxLength(255);
+            .HasMaxLength(255)
+            .IsRequired(false);
+
+        builder.Property(x => x.PostLikeCount);
 
         builder.Property(x => x.CreationTime)
             .IsRequired();
@@ -33,12 +36,14 @@ internal class PostEntityTypeConfiguration : IEntityTypeConfiguration<Post>
         builder.HasOne(x => x.User)
             .WithMany(x => x.Posts)
             .HasForeignKey(x => x.UserId)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.SetNull)
+            .IsRequired(false);
 
         builder.HasMany(x => x.Comments)
             .WithOne(x => x.Post)
             .HasForeignKey(x => x.PostId)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.SetNull)
+            .IsRequired(false);
 
         builder.Metadata
             .FindNavigation(nameof(Post.User))!

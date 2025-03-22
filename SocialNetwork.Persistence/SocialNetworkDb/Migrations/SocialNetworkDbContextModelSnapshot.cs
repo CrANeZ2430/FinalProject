@@ -29,6 +29,9 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<int>("CommentLikeCount")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(2000)
@@ -43,7 +46,7 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("CommentId");
@@ -69,9 +72,12 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("ImagePath")
+                    b.Property<string[]>("ImagePath")
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("text[]");
+
+                    b.Property<int>("PostLikeCount")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -81,7 +87,7 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                     b.Property<DateTime>("UpdateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("PostId");
@@ -98,7 +104,6 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("Bio")
-                        .IsRequired()
                         .HasMaxLength(2000)
                         .HasColumnType("character varying(2000)");
 
@@ -138,14 +143,12 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                     b.HasOne("SocialNetwork.Core.Domain.Posts.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("SocialNetwork.Core.Domain.Users.Models.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Post");
 
@@ -157,8 +160,7 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                     b.HasOne("SocialNetwork.Core.Domain.Users.Models.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("User");
                 });

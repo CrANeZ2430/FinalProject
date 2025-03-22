@@ -17,7 +17,7 @@ public class User
         string email, 
         string passwordHash, 
         string profilePicturePath, 
-        string bio, 
+        string? bio, 
         DateTime creationTime)
     {
         UserId = userId;
@@ -34,7 +34,7 @@ public class User
     public string Email { get; private set; }
     public string PasswordHash { get; private set; }
     public string ProfilePicturePath { get; private set; }
-    public string Bio { get; private set; }
+    public string? Bio { get; private set; }
     public DateTime CreationTime { get; private set; }
     public IReadOnlyCollection<Post> Posts => _posts;
     public IReadOnlyCollection<Comment> Comments => _comments;

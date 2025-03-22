@@ -4,4 +4,4 @@ public record CreatePostRequest(
     Guid UserId,
     string Title,
     string Content,
-    string? ImageUrl);
+    string[]? ImagePath);

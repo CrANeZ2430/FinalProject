@@ -1,6 +1,4 @@
-@SocialNetwork.API_HostAddress = http://localhost:5125
+@baseUrl = http://localhost:7265
 
-GET {{SocialNetwork.API_HostAddress}}/weatherforecast/
+GET {{baseUrl}}/api/posts?page=1&pageSize=10
 Accept: application/json
-
-###

@@ -24,19 +24,25 @@ public class GetPostsQueryHandler(
                 p.Title,
                 p.Content,
                 p.ImagePath,
+                p.PostLikeCount,
                 p.CreationTime,
                 p.UpdateTime,
-                new UserDto(
-                    p.User.UserName,
-                    p.User.Email,
-                    p.User.PasswordHash),
+                p.User != null
+                    ? new UserDto(
+                        p.User.UserName,
+                        p.User.Email,
+                        p.User.PasswordHash)
+                    : null,
                 p.Comments
                     .Select(c => new CommentDto(
-                        new UserDto(
-                            c.User.UserName,
-                            c.User.Email,
-                            c.User.PasswordHash),
-                        c.Content))
+                        c.User != null
+                            ? new UserDto(
+                                c.User.UserName,
+                                c.User.Email,
+                                c.User.PasswordHash)
+                            : null,
+                        c.Content,
+                        c.CommentLikeCount))
                     .ToArray()
             ))
             .Skip(skip)

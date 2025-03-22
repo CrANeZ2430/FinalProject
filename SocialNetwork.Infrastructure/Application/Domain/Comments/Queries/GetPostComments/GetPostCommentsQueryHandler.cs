@@ -20,11 +20,14 @@ public class GetPostCommentsQueryHandler(
                 .OrderBy(c => c.CreationTime)
                 .Select(c => new CommentDto(
                     c.CommentId,
-                    new UserDto(
-                        c.User.UserName,
-                        c.User.Email,
-                        c.User.PasswordHash),
-                    c.Content));
+                    c.User != null
+                        ? new UserDto(
+                            c.User.UserName,
+                            c.User.Email,
+                            c.User.PasswordHash)
+                        : null,
+                    c.Content,
+                    c.CommentLikeCount));
 
         var count = await sqlQuery
                 .CountAsync(cancellationToken);

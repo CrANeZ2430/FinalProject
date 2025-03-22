@@ -24,7 +24,7 @@ internal class CreateUserCommandHandler(
 
         var user = User.Create(data);
         userRepository.Add(user);
-        await unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return user.UserId;
     }

@@ -23,7 +23,6 @@ public class UsersController(
             pageSize);
 
         var result = await mediator.Send(query, cancellationToken);
-
         return Ok(result);
     }
 

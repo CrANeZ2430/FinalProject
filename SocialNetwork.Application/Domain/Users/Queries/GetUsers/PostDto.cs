@@ -3,5 +3,6 @@
 public record PostDto(
     string Title,
     string Content,
-    string? ImagePath,
+    string[]? ImagePath,
+    int PostLikeCount,
     CommentDto[] Comments);

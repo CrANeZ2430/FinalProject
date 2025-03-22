@@ -2,5 +2,6 @@
 
 public record CommentDto(
     Guid CommentId,
-    UserDto User,
-    string Content);
+    UserDto? User,
+    string Content,
+    int CommentLikeCount);
