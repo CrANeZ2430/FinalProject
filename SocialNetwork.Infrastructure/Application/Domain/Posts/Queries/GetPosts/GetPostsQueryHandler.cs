@@ -11,35 +11,43 @@ public class GetPostsQueryHandler(
     : IRequestHandler<GetPostsQuery, PageResponse<PostDto[]>>
 {
     public async Task<PageResponse<PostDto[]>> Handle(
-        GetPostsQuery request, 
+        GetPostsQuery query, 
         CancellationToken cancellationToken = default)
     {
-        var sqlQuery = dbContext
-            .Posts
+        var skip = query.PageSize * (query.Page - 1);
+
+        var sqlQuery = dbContext.Posts
             .AsNoTracking()
-            .Include(x => x.User);
-
-        var skip = request.PageSize * (request.Page - 1);
-        var count = sqlQuery.Count();
-
-        var users = await sqlQuery
-            .OrderBy(x => x.Title)
-            .Skip(skip)
-            .Take(request.PageSize)
-            .Select(x => new PostDto(
-                x.PostId,
-                x.Title,
-                x.Content,
-                x.ImagePath,
-                x.CreationTime,
-                x.UpdateTime,
+            .OrderBy(p => p.Title)
+            .Select(p => new PostDto(
+                p.PostId,
+                p.Title,
+                p.Content,
+                p.ImagePath,
+                p.CreationTime,
+                p.UpdateTime,
                 new UserDto(
-                    x.User.UserName,
-                    x.User.Email,
-                    x.User.PasswordHash)
-                ))
-            .ToArrayAsync(cancellationToken);
+                    p.User.UserName,
+                    p.User.Email,
+                    p.User.PasswordHash),
+                p.Comments
+                    .Select(c => new CommentDto(
+                        new UserDto(
+                            c.User.UserName,
+                            c.User.Email,
+                            c.User.PasswordHash),
+                        c.Content))
+                    .ToArray()
+            ))
+            .Skip(skip)
+            .Take(query.PageSize);
 
-        return new PageResponse<PostDto[]>(count, users);
+        var count = await dbContext.Posts
+                .CountAsync(cancellationToken);
+        var posts = await sqlQuery
+                .ToArrayAsync(cancellationToken);
+
+        return new PageResponse<PostDto[]>(count, posts);
+
     }
 }

@@ -6,4 +6,5 @@ public static class Routes
 
     public const string Users = $"{_prefix}/users";
     public const string Posts = $"{_prefix}/posts";
+    public const string Comments = $"{_prefix}/comments";
 }

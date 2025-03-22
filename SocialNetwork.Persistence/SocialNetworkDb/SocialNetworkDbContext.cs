@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SocialNetwork.Core.Domain.Comments.Models;
 using SocialNetwork.Core.Domain.Posts.Models;
 using SocialNetwork.Core.Domain.Users.Models;
 
@@ -11,6 +12,7 @@ public class SocialNetworkDbContext(DbContextOptions<SocialNetworkDbContext> opt
 
     public DbSet<User> Users { get; set; }
     public DbSet<Post> Posts { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

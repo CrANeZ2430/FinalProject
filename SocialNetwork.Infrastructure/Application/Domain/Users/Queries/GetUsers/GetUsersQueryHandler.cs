@@ -8,41 +8,54 @@ namespace SocialNetwork.Infrastructure.Application.Domain.Users.Queries.GetUsers
 
 internal class GetUsersQueryHandler(
     SocialNetworkDbContext dbContext)
-    : IRequestHandler<GetUsersQuery, PageResponse<UserDto[]>>
+    : IRequestHandler<GetUsersQuery, PageResponse<PostUserDto[]>>
 {
-    public async Task<PageResponse<UserDto[]>> Handle(
-        GetUsersQuery request, 
+    public async Task<PageResponse<PostUserDto[]>> Handle(
+        GetUsersQuery query, 
         CancellationToken cancellationToken = default)
     {
-        var sqlQuery = dbContext
-            .Users
+        var skip = query.PageSize * (query.Page - 1);
+
+        var sqlQuery = dbContext.Users
             .AsNoTracking()
-            .Include(x => x.Posts);
-
-        var skip = request.PageSize * (request.Page - 1);
-        var count = sqlQuery.Count();
-
-        var users = await sqlQuery
-            .OrderBy(x => x.UserName)
+            .OrderBy(u => u.UserName)
+            .Select(u => new PostUserDto(
+                u.UserId,
+                u.UserName,
+                u.Email,
+                u.PasswordHash,
+                u.ProfilePicturePath,
+                u.Bio,
+                u.CreationTime,
+                u.Posts
+                    .Select(p => new PostDto(
+                        p.Title,
+                        p.Content,
+                        p.ImagePath,
+                        p.Comments
+                            .Select(c => new CommentDto(
+                                new CommentUserDto(
+                                    c.User.UserId,
+                                    c.User.UserName,
+                                    c.User.Email,
+                                    c.User.PasswordHash,
+                                    c.User.ProfilePicturePath,
+                                    c.User.Bio,
+                                    c.User.CreationTime
+                                ),
+                                c.Content))
+                            .ToArray()))
+                    .ToArray()
+            ))
             .Skip(skip)
-            .Take(request.PageSize)
-            .Select(x => new UserDto(
-                x.UserId,
-                x.UserName,
-                x.Email,
-                x.PasswordHash,
-                x.ProfilePicturePath,
-                x.Bio,
-                x.CreationTime,
-                x.Posts
-                .Select(x => new PostDto(
-                    x.Title,
-                    x.Content,
-                    x.ImagePath))
-                .ToArray()
-                ))
-            .ToArrayAsync(cancellationToken);
+            .Take(query.PageSize);
 
-        return new PageResponse<UserDto[]>(count, users);
+        var count = await dbContext.Users
+                .CountAsync(cancellationToken);
+        var users = await sqlQuery
+                .ToArrayAsync(cancellationToken);
+
+        return new PageResponse<PostUserDto[]>(count, users);
+
     }
 }

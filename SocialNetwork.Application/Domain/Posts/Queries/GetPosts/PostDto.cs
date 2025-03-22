@@ -7,4 +7,5 @@ public record PostDto(
     string? ImagePath,
     DateTime CreationDate,
     DateTime UpdateTime,
-    UserDto User);
+    UserDto User,
+    CommentDto[] Comments);

@@ -1,12 +1,10 @@
-﻿using MediatR;
+﻿namespace SocialNetwork.Application.Domain.Users.Queries.GetUsers;
 
-namespace SocialNetwork.Application.Domain.Users.Queries.GetUsers;
-
-public record UserDto(
+public record PostUserDto(
     Guid UserId,
     string UserName,
     string Email,
-    string Password,
+    string PasswordHash,
     string ProfilePicturePath,
     string Bio,
     DateTime CreationDate,

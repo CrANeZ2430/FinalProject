@@ -1,4 +1,5 @@
-﻿using SocialNetwork.Core.Domain.Posts.Data;
+﻿using SocialNetwork.Core.Domain.Comments.Models;
+using SocialNetwork.Core.Domain.Posts.Data;
 using SocialNetwork.Core.Domain.Users.Models;
 
 namespace SocialNetwork.Core.Domain.Posts.Models;
@@ -6,6 +7,7 @@ namespace SocialNetwork.Core.Domain.Posts.Models;
 public class Post
 {
     private readonly User _user;
+    private readonly List<Comment> _comments;
 
     private Post() { }
 
@@ -35,6 +37,7 @@ public class Post
     public DateTime CreationTime { get; private set; }
     public DateTime UpdateTime { get; private set; }
     public User User => _user;
+    public IReadOnlyCollection<Comment> Comments => _comments;
 
     public static Post Create(CreatePostData data)
     {

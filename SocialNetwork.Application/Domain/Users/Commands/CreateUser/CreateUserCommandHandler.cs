@@ -8,7 +8,7 @@ namespace SocialNetwork.Application.Domain.Users.Commands.CreateUser;
 
 internal class CreateUserCommandHandler(
     IUnitOfWork unitOfWork,
-    IUserRepository userRepository) 
+    IUsersRepository userRepository) 
     : IRequestHandler<CreateUserCommand, Guid>
 {
     public async Task<Guid> Handle(
