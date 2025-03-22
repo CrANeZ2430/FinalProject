@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using SocialNetwork.Application.Common;
 using SocialNetwork.Application.Domain.Comments.Queries.GetPostComments;
-using SocialNetwork.Core.Domain.Posts.Models;
 using SocialNetwork.Persistence.SocialNetworkDb;
 
 namespace SocialNetwork.Infrastructure.Application.Domain.Comments.Queries.GetPostComments;
