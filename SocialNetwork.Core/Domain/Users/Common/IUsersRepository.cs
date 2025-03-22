@@ -2,9 +2,9 @@
 
 namespace SocialNetwork.Core.Domain.Users.Common;
 
-public interface IUserRepository
+public interface IUsersRepository
 {
     void Add(User user);
     void Remove(User user);
-    Task<User> GetById(Guid id, CancellationToken cancellationToken = default);
+    Task<User> GetById(Guid userId, CancellationToken cancellationToken = default);
 }

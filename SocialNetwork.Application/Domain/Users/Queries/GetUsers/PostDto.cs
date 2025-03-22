@@ -3,4 +3,5 @@
 public record PostDto(
     string Title,
     string Content,
-    string? ImagePath);
+    string? ImagePath,
+    CommentDto[] Comments);

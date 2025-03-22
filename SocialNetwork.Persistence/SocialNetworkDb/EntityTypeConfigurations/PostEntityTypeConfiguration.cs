@@ -35,8 +35,17 @@ internal class PostEntityTypeConfiguration : IEntityTypeConfiguration<Post>
             .HasForeignKey(x => x.UserId)
             .IsRequired();
 
+        builder.HasMany(x => x.Comments)
+            .WithOne(x => x.Post)
+            .HasForeignKey(x => x.PostId)
+            .IsRequired();
+
         builder.Metadata
             .FindNavigation(nameof(Post.User))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        builder.Metadata
+            .FindNavigation(nameof(Post.Comments))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

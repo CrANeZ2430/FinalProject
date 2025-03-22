@@ -38,8 +38,17 @@ internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
             .HasForeignKey(x => x.UserId)
             .IsRequired();
 
+        builder.HasMany(x => x.Comments)
+            .WithOne(x => x.User)
+            .HasForeignKey(x => x.UserId)
+            .IsRequired();
+
         builder.Metadata
             .FindNavigation(nameof(User.Posts))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        builder.Metadata
+            .FindNavigation(nameof(User.Comments))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

@@ -12,8 +12,8 @@ using SocialNetwork.Persistence.SocialNetworkDb;
 namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
 {
     [DbContext(typeof(SocialNetworkDbContext))]
-    [Migration("20250307203451_add-migration AddedPostEntity")]
-    partial class addmigrationAddedPostEntity
+    [Migration("20250322085738_AddedPostAndCommentEntities")]
+    partial class AddedPostAndCommentEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,38 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("SocialNetwork.Core.Domain.Comments.Models.Comment", b =>
+                {
+                    b.Property<Guid>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UpdateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments", "socialNetwork");
+                });
 
             modelBuilder.Entity("SocialNetwork.Core.Domain.Posts.Models.Post", b =>
                 {
@@ -104,6 +136,25 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                     b.ToTable("Users", "socialNetwork");
                 });
 
+            modelBuilder.Entity("SocialNetwork.Core.Domain.Comments.Models.Comment", b =>
+                {
+                    b.HasOne("SocialNetwork.Core.Domain.Posts.Models.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SocialNetwork.Core.Domain.Users.Models.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SocialNetwork.Core.Domain.Posts.Models.Post", b =>
                 {
                     b.HasOne("SocialNetwork.Core.Domain.Users.Models.User", "User")
@@ -115,8 +166,15 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SocialNetwork.Core.Domain.Posts.Models.Post", b =>
+                {
+                    b.Navigation("Comments");
+                });
+
             modelBuilder.Entity("SocialNetwork.Core.Domain.Users.Models.User", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

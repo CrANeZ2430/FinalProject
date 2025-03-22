@@ -5,7 +5,7 @@ using SocialNetwork.Persistence.SocialNetworkDb;
 
 namespace SocialNetwork.Infrastructure.Core.Users.Common;
 
-internal class UsersRepository(SocialNetworkDbContext dbContext) : IUserRepository
+internal class UsersRepository(SocialNetworkDbContext dbContext) : IUsersRepository
 {
     public void Add(User user)
     {
