@@ -23,7 +23,7 @@ public class Comment
         UserId = userId;
         PostId = postId;
         Content = content;
-        CommentLikeCount = 0;
+        LikeCount = 0;
         CreationTime = creationTime;
         UpdateTime = updateTime;
     }
@@ -32,7 +32,7 @@ public class Comment
     public Guid? UserId { get; private set; }
     public Guid PostId { get; private set; }
     public string Content { get; private set; }
-    public int CommentLikeCount { get; private set; }
+    public int LikeCount { get; private set; }
     public DateTime CreationTime { get; private set; }
     public DateTime UpdateTime { get; private set; }
     public Post Post => _post;
@@ -51,7 +51,7 @@ public class Comment
 
     public void LikeComment(bool isLike)
     {
-        if(isLike) CommentLikeCount++;
-        else CommentLikeCount--;
+        if(isLike) LikeCount++;
+        else LikeCount--;
     }
 }

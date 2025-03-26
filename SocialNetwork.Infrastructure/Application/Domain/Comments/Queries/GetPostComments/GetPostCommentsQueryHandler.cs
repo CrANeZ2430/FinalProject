@@ -27,7 +27,7 @@ public class GetPostCommentsQueryHandler(
                             c.User.PasswordHash)
                         : null,
                     c.Content,
-                    c.CommentLikeCount));
+                    c.LikeCount));
 
         var count = await sqlQuery
                 .CountAsync(cancellationToken);

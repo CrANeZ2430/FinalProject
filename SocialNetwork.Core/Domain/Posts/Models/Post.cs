@@ -25,7 +25,7 @@ public class Post
         Title = title;
         Content = content;
         ImagePath = imagePath;
-        PostLikeCount = 0;
+        LikeCount = 0;
         CreationTime = creationTime;
         UpdateTime = updateTime;
     }
@@ -35,7 +35,7 @@ public class Post
     public string Title { get; private set; }
     public string Content { get; private set; }
     public string[]? ImagePath { get; private set; }
-    public int PostLikeCount { get; private set; }
+    public int LikeCount { get; private set; }
     public DateTime CreationTime { get; private set; }
     public DateTime UpdateTime { get; private set; }
     public User? User => _user;
@@ -55,7 +55,7 @@ public class Post
 
     public void LikePost(bool isLike)
     {
-        if(isLike) PostLikeCount++;
-        else PostLikeCount--;
+        if(isLike) LikeCount++;
+        else LikeCount--;
     }
 }

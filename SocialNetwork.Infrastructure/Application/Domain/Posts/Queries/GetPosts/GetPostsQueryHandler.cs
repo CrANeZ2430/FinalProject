@@ -24,7 +24,7 @@ public class GetPostsQueryHandler(
                 p.Title,
                 p.Content,
                 p.ImagePath,
-                p.PostLikeCount,
+                p.LikeCount,
                 p.CreationTime,
                 p.UpdateTime,
                 p.User != null
@@ -42,7 +42,7 @@ public class GetPostsQueryHandler(
                                 c.User.PasswordHash)
                             : null,
                         c.Content,
-                        c.CommentLikeCount))
+                        c.LikeCount))
                     .ToArray()
             ))
             .Skip(skip)

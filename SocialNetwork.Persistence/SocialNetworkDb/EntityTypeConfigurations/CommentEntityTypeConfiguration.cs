@@ -20,7 +20,7 @@ internal class CommentEntityTypeConfiguration : IEntityTypeConfiguration<Comment
             .HasMaxLength(2000)
             .IsRequired();
 
-        builder.Property(x => x.CommentLikeCount);
+        builder.Property(x => x.LikeCount);
 
         builder.Property(x => x.CreationTime)
             .IsRequired();

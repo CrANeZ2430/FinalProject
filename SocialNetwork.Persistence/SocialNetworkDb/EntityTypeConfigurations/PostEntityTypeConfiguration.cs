@@ -25,7 +25,7 @@ internal class PostEntityTypeConfiguration : IEntityTypeConfiguration<Post>
             .HasMaxLength(255)
             .IsRequired(false);
 
-        builder.Property(x => x.PostLikeCount);
+        builder.Property(x => x.LikeCount);
 
         builder.Property(x => x.CreationTime)
             .IsRequired();
