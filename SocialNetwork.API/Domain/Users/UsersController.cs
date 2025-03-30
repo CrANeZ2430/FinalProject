@@ -4,6 +4,7 @@ using SocialNetwork.API.Common.Constants;
 using SocialNetwork.API.Domain.Users.Records;
 using SocialNetwork.Application.Domain.Users.Commands.CreateUser;
 using SocialNetwork.Application.Domain.Users.Commands.DeleteUser;
+using SocialNetwork.Application.Domain.Users.Commands.UpdateUser;
 using SocialNetwork.Application.Domain.Users.Queries.GetUsers;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,6 +25,7 @@ public class UsersController(
             pageSize);
 
         var result = await mediator.Send(query, cancellationToken);
+
         return Ok(result);
     }
 
@@ -40,7 +42,27 @@ public class UsersController(
             request.Bio);
 
         var id = await mediator.Send(command, cancellationToken);
+
         return Ok(id);
+    }
+
+    [HttpPut("{userId}")]
+    public async Task<IActionResult> UpdateUser(
+        [FromRoute][Required] Guid userId,
+        [FromQuery] UpdateUserRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new UpdateUserCommand(
+            userId,
+            request.UserName,
+            request.Email,
+            request.PasswordHash,
+            request.ProfilePicturePath,
+            request.Bio);
+
+        await mediator.Send(command, cancellationToken);
+
+        return Ok();
     }
 
     [HttpDelete("{userId}")]

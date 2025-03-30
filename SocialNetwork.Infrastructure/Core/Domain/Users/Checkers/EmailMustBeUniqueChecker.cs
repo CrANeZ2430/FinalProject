@@ -2,7 +2,7 @@
 using SocialNetwork.Core.Domain.Users.Checkers;
 using SocialNetwork.Persistence.SocialNetworkDb;
 
-namespace SocialNetwork.Infrastructure.Core.Users.Checkers;
+namespace SocialNetwork.Infrastructure.Core.Domain.Users.Checkers;
 
 public class EmailMustBeUniqueChecker(
     SocialNetworkDbContext dbContext)

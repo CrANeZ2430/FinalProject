@@ -7,4 +7,5 @@ public interface IPostsRepository
     void Add(Post post);
     void Remove(Post post);
     Task<Post> GetById(Guid postId, CancellationToken cancellationToken = default);
+    Task<bool> PostExists(Guid postId, CancellationToken cancellationToken = default);
 }

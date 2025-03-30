@@ -4,11 +4,11 @@ using SocialNetwork.Core.Domain.Comments.Common;
 using SocialNetwork.Core.Domain.Posts.Common;
 using SocialNetwork.Core.Domain.Users.Checkers;
 using SocialNetwork.Core.Domain.Users.Common;
-using SocialNetwork.Infrastructure.Core.Comments.Common;
 using SocialNetwork.Infrastructure.Core.Common.UnitOfWork;
-using SocialNetwork.Infrastructure.Core.Posts.Common;
-using SocialNetwork.Infrastructure.Core.Users.Checkers;
-using SocialNetwork.Infrastructure.Core.Users.Common;
+using SocialNetwork.Infrastructure.Core.Domain.Comments.Common;
+using SocialNetwork.Infrastructure.Core.Domain.Posts.Common;
+using SocialNetwork.Infrastructure.Core.Domain.Users.Checkers;
+using SocialNetwork.Infrastructure.Core.Domain.Users.Common;
 using SocialNetwork.Infrastructure.Middleware;
 using System.Reflection;
 

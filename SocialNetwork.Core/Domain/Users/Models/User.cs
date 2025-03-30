@@ -2,6 +2,7 @@
 using SocialNetwork.Core.Domain.Comments.Models;
 using SocialNetwork.Core.Domain.Posts.Models;
 using SocialNetwork.Core.Domain.Users.Checkers;
+using SocialNetwork.Core.Domain.Users.Common;
 using SocialNetwork.Core.Domain.Users.Data;
 using SocialNetwork.Core.Domain.Users.Validators;
 
@@ -57,5 +58,19 @@ public class User : Entity
             data.ProfilePicturePath,
             data.Bio,
             DateTime.UtcNow);
+    }
+
+    public async Task Update(
+        UpdateUserData data,
+        IEmailMustBeUniqueChecker emailChecker,
+        CancellationToken cancellationToken = default)
+    {
+        await ValidateAsync(new UpdateUserDataValidator(emailChecker), data, cancellationToken);
+
+        UserName = data.UserName;
+        Email = data.Email;
+        PasswordHash = data.PasswordHash;
+        ProfilePicturePath = data.ProfilePicturePath;
+        Bio = data.Bio;
     }
 }

@@ -3,10 +3,14 @@ using SocialNetwork.Core.Common;
 using SocialNetwork.Core.Domain.Comments.Common;
 using SocialNetwork.Core.Domain.Comments.Data;
 using SocialNetwork.Core.Domain.Comments.Models;
+using SocialNetwork.Core.Domain.Posts.Common;
+using SocialNetwork.Core.Domain.Users.Common;
 
 namespace SocialNetwork.Application.Domain.Comments.Commands.CreatePost;
 
 public class CreateCommentCommandHandler(
+    IUsersRepository usersRepository,
+    IPostsRepository postsRepository,
     ICommentsRepository commentsRepository,
     IUnitOfWork unitOfWork) 
     : IRequestHandler<CreateCommentCommand, Guid>
@@ -20,7 +24,11 @@ public class CreateCommentCommandHandler(
             command.PostId,
             command.Content);
 
-        var comment = Comment.Create(data);
+        var comment = await Comment.Create(
+            data, 
+            usersRepository, 
+            postsRepository);
+
         commentsRepository.Add(comment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

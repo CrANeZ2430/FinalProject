@@ -1,7 +1,6 @@
 ﻿namespace SocialNetwork.Core.Domain.Posts.Data;
 
-public record CreatePostData(
+public record UpdatePostData(
     string Title,
     string Content,
-    string[]? ImagePath,
-    Guid UserId);
+    string[]? ImagePath);

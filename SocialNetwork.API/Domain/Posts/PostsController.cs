@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.Common.Constants;
+using SocialNetwork.API.Domain.Posts.Records;
 using SocialNetwork.Application.Domain.Posts.Commands.AddLike;
 using SocialNetwork.Application.Domain.Posts.Commands.CreatePost;
 using SocialNetwork.Application.Domain.Posts.Commands.DeletePost;
+using SocialNetwork.Application.Domain.Posts.Commands.UpdatePostCommand;
 using SocialNetwork.Application.Domain.Posts.Queries.GetPosts;
 using SocialNetwork.Application.Domain.Posts.Queries.GetUserPosts;
 using SocialNetwork.Core.Domain.Posts.Data;
@@ -52,13 +54,29 @@ public class PostsController(
         CancellationToken cancellationToken = default)
     {
         var command = new CreatePostCommand(
-            data.UserId,
+            data.Title,
+            data.Content,
+            data.ImagePath,
+            data.UserId);
+
+        var id = await mediator.Send(command, cancellationToken);
+        return Ok(id);
+    }
+
+    [HttpPut("{postId}")]
+    public async Task<IActionResult> UpdatePost(
+        [FromRoute][Required] Guid postId,
+        [FromQuery] UpdatePostRequest data,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new UpdatePostCommand(
+            postId,
             data.Title,
             data.Content,
             data.ImagePath);
 
-        var id = await mediator.Send(command, cancellationToken);
-        return Ok(id);
+        await mediator.Send(command, cancellationToken);
+        return Ok();
     }
 
     [HttpDelete("{postId}")]

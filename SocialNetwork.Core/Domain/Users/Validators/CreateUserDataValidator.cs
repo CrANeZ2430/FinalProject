@@ -35,8 +35,9 @@ public class CreateUserDataValidator : AbstractValidator<CreateUserData>
             .MinimumLength(6).WithMessage($"{nameof(CreateUserData.PasswordHash)} must be at least 6 characters long.");
 
         RuleFor(x => x.ProfilePicturePath)
-            .NotEmpty().WithMessage($"{nameof(CreateUserData.ProfilePicturePath)} is required.");
-            //.Matches(@"^https?:\/\/").WithMessage($"{nameof(CreateUserData.ProfilePicturePath)} must be a valid URL.");
+            .NotEmpty().WithMessage($"{nameof(CreateUserData.ProfilePicturePath)} is required.")
+            .Must(path => Uri.IsWellFormedUriString(path, UriKind.Relative))
+            .WithMessage($"{nameof(CreateUserData.ProfilePicturePath)} must be a valid relative URL.");
 
         RuleFor(x => x.Bio)
             .MaximumLength(300).WithMessage($"{nameof(CreateUserData.Bio)} cannot exceed 300 characters.");

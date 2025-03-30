@@ -5,6 +5,7 @@ using SocialNetwork.API.Domain.Comments.Records;
 using SocialNetwork.Application.Domain.Comments.Commands.CreatePost;
 using SocialNetwork.Application.Domain.Comments.Commands.DeleteComment;
 using SocialNetwork.Application.Domain.Comments.Commands.LikeComment;
+using SocialNetwork.Application.Domain.Comments.Commands.UpdateComment;
 using SocialNetwork.Application.Domain.Comments.Queries.GetPostComments;
 using SocialNetwork.Application.Domain.Comments.Queries.GetUserComments;
 using System.ComponentModel.DataAnnotations;
@@ -28,6 +29,7 @@ public class CommentsController(
             pageSize);
 
         var comments = await mediator.Send(query, cancellationToken);
+
         return Ok(comments);
     }
 
@@ -59,7 +61,23 @@ public class CommentsController(
             request.Content);
 
         var id = await mediator.Send(command, cancellationToken);
+
         return Ok(id);
+    }
+
+    [HttpPut("{commentId}")]
+    public async Task<IActionResult> UpdateComment(
+        [FromRoute][Required] Guid commentId,
+        [FromQuery][Required] UpdateCommentRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new UpdateCommentCommand(
+            commentId,
+            request.Content);
+
+        await mediator.Send(command, cancellationToken);
+
+        return Ok();
     }
 
     [HttpDelete("{commentId}")]
@@ -86,6 +104,7 @@ public class CommentsController(
             isLike);
 
         await mediator.Send(command, cancellationToken);
+
         return Ok();
     }
 }

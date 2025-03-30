@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialNetwork.Core.Domain.Posts.Common;
 using SocialNetwork.Core.Domain.Posts.Models;
+using SocialNetwork.Core.Exceptions;
 using SocialNetwork.Persistence.SocialNetworkDb;
 
-namespace SocialNetwork.Infrastructure.Core.Posts.Common;
+namespace SocialNetwork.Infrastructure.Core.Domain.Posts.Common;
 
 internal class PostsRepository(SocialNetworkDbContext dbContext) : IPostsRepository
 {
@@ -21,6 +22,12 @@ internal class PostsRepository(SocialNetworkDbContext dbContext) : IPostsReposit
     {
         return await dbContext.Posts
                     .FirstOrDefaultAsync(x => x.PostId == id, cancellationToken)
-                    ?? throw new InvalidOperationException($"{nameof(Post)} cannot be found");
+                    ?? throw new NotFoundException($"{nameof(Post)} cannot be found."); ;
+    }
+
+    public async Task<bool> PostExists(Guid postId, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Posts
+                    .AnyAsync(x => x.PostId == postId, cancellationToken);
     }
 }

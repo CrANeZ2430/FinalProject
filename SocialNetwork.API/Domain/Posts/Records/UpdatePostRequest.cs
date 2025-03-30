@@ -1,7 +1,6 @@
 ﻿namespace SocialNetwork.API.Domain.Posts.Records;
 
-public record CreatePostRequest(
+public record UpdatePostRequest(
     string Title,
     string Content,
-    string[]? ImagePath,
-    Guid UserId);
+    string[]? ImagePath);

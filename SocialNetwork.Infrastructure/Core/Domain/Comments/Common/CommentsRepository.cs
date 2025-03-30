@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SocialNetwork.Core.Domain.Comments.Common;
 using SocialNetwork.Core.Domain.Comments.Models;
+using SocialNetwork.Core.Exceptions;
 using SocialNetwork.Persistence.SocialNetworkDb;
 
-namespace SocialNetwork.Infrastructure.Core.Comments.Common;
+namespace SocialNetwork.Infrastructure.Core.Domain.Comments.Common;
 
 internal class CommentsRepository(SocialNetworkDbContext dbContext) : ICommentsRepository
 {
@@ -21,6 +22,6 @@ internal class CommentsRepository(SocialNetworkDbContext dbContext) : ICommentsR
     {
         return await dbContext.Comments
                     .FirstOrDefaultAsync(x => x.CommentId == commentId, cancellationToken)
-                    ?? throw new InvalidOperationException($"{nameof(Comment)} cannot be found");
+                    ?? throw new NotFoundException($"{nameof(Comment)} cannot be found."); ;
     }
 }
