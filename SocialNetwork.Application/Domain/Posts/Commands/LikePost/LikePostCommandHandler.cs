@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SocialNetwork.Core.Common.DbContext;
+using SocialNetwork.Core.Common;
 using SocialNetwork.Core.Domain.Posts.Common;
 
 namespace SocialNetwork.Application.Domain.Posts.Commands.AddLike;

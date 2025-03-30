@@ -1,10 +1,13 @@
-﻿using SocialNetwork.Core.Domain.Comments.Models;
+﻿using SocialNetwork.Core.Common;
+using SocialNetwork.Core.Domain.Comments.Models;
 using SocialNetwork.Core.Domain.Posts.Models;
+using SocialNetwork.Core.Domain.Users.Checkers;
 using SocialNetwork.Core.Domain.Users.Data;
+using SocialNetwork.Core.Domain.Users.Validators;
 
 namespace SocialNetwork.Core.Domain.Users.Models;
 
-public class User
+public class User : Entity
 {
     private readonly List<Post> _posts = new();
     private readonly List<Comment> _comments = new();
@@ -39,8 +42,13 @@ public class User
     public IReadOnlyCollection<Post> Posts => _posts;
     public IReadOnlyCollection<Comment> Comments => _comments;
 
-    public static User Create(CreateUserData data)
+    public static async Task<User> Create(
+        CreateUserData data,
+        IEmailMustBeUniqueChecker emailChecker,
+        CancellationToken cancellationToken = default)
     {
+        await ValidateAsync(new CreateUserDataValidator(emailChecker), data, cancellationToken);
+
         return new User(
             Guid.NewGuid(),
             data.UserName,

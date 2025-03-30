@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SocialNetwork.Core.Common.DbContext;
+using SocialNetwork.Core.Common;
 using SocialNetwork.Core.Domain.Posts.Common;
 using SocialNetwork.Core.Domain.Posts.Data;
 using SocialNetwork.Core.Domain.Posts.Models;

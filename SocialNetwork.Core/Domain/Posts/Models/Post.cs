@@ -12,13 +12,13 @@ public class Post
     private Post() { }
 
     public Post(
-        Guid postId, 
-        Guid? userId, 
+        Guid postId,
         string title, 
         string content,
         string[]? imagePath,
         DateTime creationTime, 
-        DateTime updateTime)
+        DateTime updateTime,
+        Guid? userId)
     {
         PostId = postId;
         UserId = userId;
@@ -31,13 +31,13 @@ public class Post
     }
 
     public Guid PostId { get; private set; }
-    public Guid? UserId { get; private set; }
     public string Title { get; private set; }
     public string Content { get; private set; }
     public string[]? ImagePath { get; private set; }
     public int LikeCount { get; private set; }
     public DateTime CreationTime { get; private set; }
     public DateTime UpdateTime { get; private set; }
+    public Guid? UserId { get; private set; }
     public User? User => _user;
     public IReadOnlyCollection<Comment> Comments => _comments;
 
@@ -45,12 +45,12 @@ public class Post
     {
         return new Post(
             Guid.NewGuid(),
-            data.UserId,
             data.Title,
             data.Content,
             data.ImagePath,
             DateTime.UtcNow,
-            DateTime.UtcNow);
+            DateTime.UtcNow,
+            data.UserId);
     }
 
     public void LikePost(bool isLike)

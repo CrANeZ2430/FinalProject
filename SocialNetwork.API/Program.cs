@@ -1,5 +1,6 @@
 using SocialNetwork.Application;
 using SocialNetwork.Infrastructure;
+using SocialNetwork.Infrastructure.Middleware;
 using SocialNetwork.Persistence.SocialNetworkDb;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,4 +30,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.UseCustomExceptionHandler(app.Environment);
 app.Run();

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.Common.Constants;
 using SocialNetwork.API.Domain.Users.Records;
 using SocialNetwork.Application.Domain.Users.Commands.CreateUser;
+using SocialNetwork.Application.Domain.Users.Commands.DeleteUser;
 using SocialNetwork.Application.Domain.Users.Queries.GetUsers;
 using System.ComponentModel.DataAnnotations;
 
@@ -40,5 +41,18 @@ public class UsersController(
 
         var id = await mediator.Send(command, cancellationToken);
         return Ok(id);
+    }
+
+    [HttpDelete("{userId}")]
+    public async Task<IActionResult> DeleteUser(
+        [FromRoute][Required] Guid userId,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeleteUserCommand(
+            userId);
+
+        await mediator.Send(command, cancellationToken);
+
+        return Ok();
     }
 }

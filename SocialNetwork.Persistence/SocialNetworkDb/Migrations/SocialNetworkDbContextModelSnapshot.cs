@@ -27,27 +27,34 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                 {
                     b.Property<Guid>("CommentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(1);
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnOrder(4);
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnOrder(6);
 
                     b.Property<int>("LikeCount")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnOrder(5);
 
                     b.Property<Guid>("PostId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(3);
 
                     b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnOrder(7);
 
                     b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(2);
 
                     b.HasKey("CommentId");
 
@@ -62,33 +69,40 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                 {
                     b.Property<Guid>("PostId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(1);
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnOrder(4);
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnOrder(6);
 
                     b.Property<string[]>("ImagePath")
                         .HasMaxLength(255)
-                        .HasColumnType("text[]");
+                        .HasColumnType("text[]")
+                        .HasColumnOrder(5);
 
                     b.Property<int>("LikeCount")
                         .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnOrder(3);
 
                     b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnOrder(7);
 
                     b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(2);
 
                     b.HasKey("PostId");
 
@@ -101,34 +115,41 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                 {
                     b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnOrder(1);
 
                     b.Property<string>("Bio")
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnOrder(6);
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnOrder(7);
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnOrder(3);
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
+                        .HasColumnType("character varying(64)")
+                        .HasColumnOrder(4);
 
                     b.Property<string>("ProfilePicturePath")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasColumnType("character varying(255)")
+                        .HasColumnOrder(5);
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("character varying(50)")
+                        .HasColumnOrder(2);
 
                     b.HasKey("UserId");
 

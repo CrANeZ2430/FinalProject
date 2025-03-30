@@ -10,23 +10,33 @@ internal class CommentEntityTypeConfiguration : IEntityTypeConfiguration<Comment
     {
         builder.HasKey(x => x.CommentId);
 
+        builder.Property(x => x.CommentId)
+            .HasColumnOrder(1);
+
         builder.Property(x => x.UserId)
-            .IsRequired(false);
+            .IsRequired(false)
+            .HasColumnOrder(2);
 
         builder.Property(x => x.PostId)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnOrder(3);
 
         builder.Property(x => x.Content)
-            .HasMaxLength(2000)
-            .IsRequired();
+            .HasMaxLength(300)
+            .IsRequired()
+            .HasColumnOrder(4);
 
-        builder.Property(x => x.LikeCount);
+        builder.Property(x => x.LikeCount)
+            .IsRequired()
+            .HasColumnOrder(5);
 
         builder.Property(x => x.CreationTime)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnOrder(6);
 
         builder.Property(x => x.UpdateTime)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnOrder(7);
 
         builder.HasOne(x => x.Post)
             .WithMany(x => x.Comments)

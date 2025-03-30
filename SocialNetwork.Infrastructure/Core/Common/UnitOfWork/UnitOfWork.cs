@@ -1,4 +1,4 @@
-﻿using SocialNetwork.Core.Common.DbContext;
+﻿using SocialNetwork.Core.Common;
 using SocialNetwork.Persistence.SocialNetworkDb;
 
 namespace SocialNetwork.Infrastructure.Core.Common.UnitOfWork;

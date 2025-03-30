@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SocialNetwork.Core.Common.DbContext;
+using SocialNetwork.Core.Common;
 using SocialNetwork.Core.Domain.Comments.Common;
 using SocialNetwork.Core.Domain.Comments.Data;
 using SocialNetwork.Core.Domain.Comments.Models;

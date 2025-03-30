@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.Common.Constants;
 using SocialNetwork.API.Domain.Comments.Records;
 using SocialNetwork.Application.Domain.Comments.Commands.CreatePost;
+using SocialNetwork.Application.Domain.Comments.Commands.DeleteComment;
 using SocialNetwork.Application.Domain.Comments.Commands.LikeComment;
 using SocialNetwork.Application.Domain.Comments.Queries.GetPostComments;
+using SocialNetwork.Application.Domain.Comments.Queries.GetUserComments;
 using System.ComponentModel.DataAnnotations;
 
 namespace SocialNetwork.API.Domain.Comments;
@@ -29,6 +31,23 @@ public class CommentsController(
         return Ok(comments);
     }
 
+    [HttpGet("from-user/{userId}")]
+    public async Task<IActionResult> GetUserComments(
+        [FromRoute][Required] Guid userId,
+        [FromQuery][Required] int page = 1,
+        [FromQuery][Required] int pageSize = 10,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetUserCommentsQuery(
+            userId,
+            page,
+            pageSize);
+
+        var comments = await mediator.Send(query, cancellationToken);
+
+        return Ok(comments);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateComment(
         [FromQuery] CreateCommentRequest request,
@@ -41,6 +60,19 @@ public class CommentsController(
 
         var id = await mediator.Send(command, cancellationToken);
         return Ok(id);
+    }
+
+    [HttpDelete("{commentId}")]
+    public async Task<IActionResult> DeleteComment(
+        [FromRoute][Required] Guid commentId,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeleteCommentCommand(
+            commentId);
+
+        await mediator.Send(command, cancellationToken);
+
+        return Ok();
     }
 
     [HttpPut("add-like/{commentId}")]

@@ -1,6 +1,6 @@
 ﻿using SocialNetwork.Core.Domain.Users.Models;
 
-namespace SocialNetwork.Core.Common.DbContext;
+namespace SocialNetwork.Core.Common;
 
 public interface IUnitOfWork
 {

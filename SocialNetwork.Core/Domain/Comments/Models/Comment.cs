@@ -13,11 +13,11 @@ public class Comment
 
     public Comment(
         Guid commentId,
-        Guid? userId,
-        Guid postId,
         string content,
         DateTime creationTime,
-        DateTime updateTime)
+        DateTime updateTime,
+        Guid? userId,
+        Guid postId)
     {
         CommentId = commentId;
         UserId = userId;
@@ -29,12 +29,12 @@ public class Comment
     }
 
     public Guid CommentId { get; private set; }
-    public Guid? UserId { get; private set; }
-    public Guid PostId { get; private set; }
     public string Content { get; private set; }
     public int LikeCount { get; private set; }
     public DateTime CreationTime { get; private set; }
     public DateTime UpdateTime { get; private set; }
+    public Guid? UserId { get; private set; }
+    public Guid PostId { get; private set; }
     public Post Post => _post;
     public User? User => _user;
 
@@ -42,11 +42,11 @@ public class Comment
     {
         return new Comment(
             Guid.NewGuid(),
-            data.UserId,
-            data.PostId,
             data.Content,
             DateTime.UtcNow,
-            DateTime.UtcNow);
+            DateTime.UtcNow,
+            data.UserId,
+            data.PostId);
     }
 
     public void LikeComment(bool isLike)
