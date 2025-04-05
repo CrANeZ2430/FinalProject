@@ -1,107 +1,22 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
-}
-
-.user-profile {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-    .user-profile h2 {
-        margin-bottom: 20px;
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .user-profile .profile-image {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 3px solid #ddd;
-    }
-
-    .user-profile .user-info {
-        margin-left: 20px;
-    }
-
-        .user-profile .user-info h3 {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .user-profile .user-info p {
-            font-size: 16px;
-            color: #555;
-        }
-
-.user-profile {
-    background-color: #f7f7f7;
-    padding: 20px 0;
-}
-
-.card {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.profile-image {
-    transition: transform 0.3s ease;
-}
-
-    .profile-image:hover {
-        transform: scale(1.1);
-    }
-
-.user-info p {
-    font-size: 1.1rem;
-    color: #555;
-}
-
-.btn-danger {
-    width: 100%;
-    padding: 12px;
-    font-size: 1.1rem;
-}
-
-    .btn-danger:hover {
-        background-color: #c82333;
-        border-color: #bd2130;
-    }
-
-@media (max-width: 576px) {
-    .user-profile .row {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .user-profile .user-info {
-        margin-left: 0;
-        margin-top: 10px;
-    }
+    margin-bottom: 60px;
 }
