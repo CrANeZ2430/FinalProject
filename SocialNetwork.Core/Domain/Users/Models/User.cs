@@ -2,7 +2,6 @@
 using SocialNetwork.Core.Domain.Comments.Models;
 using SocialNetwork.Core.Domain.Posts.Models;
 using SocialNetwork.Core.Domain.Users.Checkers;
-using SocialNetwork.Core.Domain.Users.Common;
 using SocialNetwork.Core.Domain.Users.Data;
 using SocialNetwork.Core.Domain.Users.Validators;
 
@@ -16,10 +15,9 @@ public class User : Entity
     private User() { }
 
     public User(
-        Guid userId, 
+        string userId, 
         string userName, 
-        string email, 
-        string passwordHash, 
+        string email,
         string profilePicturePath, 
         string? bio, 
         DateTime creationTime)
@@ -27,16 +25,14 @@ public class User : Entity
         UserId = userId;
         UserName = userName;
         Email = email;
-        PasswordHash = passwordHash;
         ProfilePicturePath = profilePicturePath;
         Bio = bio;
         CreationTime = creationTime;
     }
 
-    public Guid UserId { get; private set; }
+    public string UserId { get; private set; }
     public string UserName { get; private set; }
     public string Email { get; private set; }
-    public string PasswordHash { get; private set; }
     public string ProfilePicturePath { get; private set; }
     public string? Bio { get; private set; }
     public DateTime CreationTime { get; private set; }
@@ -48,13 +44,12 @@ public class User : Entity
         IEmailMustBeUniqueChecker emailChecker,
         CancellationToken cancellationToken = default)
     {
-        await ValidateAsync(new CreateUserDataValidator(emailChecker), data, cancellationToken);
+        //await ValidateAsync(new CreateUserDataValidator(emailChecker), data, cancellationToken);
 
         return new User(
-            Guid.NewGuid(),
+            data.UserId,
             data.UserName,
             data.Email,
-            data.PasswordHash,
             data.ProfilePicturePath,
             data.Bio,
             DateTime.UtcNow);
@@ -69,7 +64,6 @@ public class User : Entity
 
         UserName = data.UserName;
         Email = data.Email;
-        PasswordHash = data.PasswordHash;
         ProfilePicturePath = data.ProfilePicturePath;
         Bio = data.Bio;
     }

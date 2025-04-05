@@ -6,6 +6,6 @@ public interface IUsersRepository
 {
     void Add(User user);
     void Remove(User user);
-    Task<User> GetById(Guid userId, CancellationToken cancellationToken = default);
-    Task<bool> UserExists(Guid userId, CancellationToken cancellationToken = default);
+    Task<User> GetById(string userId, CancellationToken cancellationToken = default);
+    Task<bool> UserExists(string userId, CancellationToken cancellationToken = default);
 }

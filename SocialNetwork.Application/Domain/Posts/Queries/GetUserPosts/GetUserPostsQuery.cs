@@ -6,5 +6,5 @@ namespace SocialNetwork.Application.Domain.Posts.Queries.GetUserPosts;
 public record GetUserPostsQuery(
     int Page,
     int PageSize,
-    Guid UserId)
+    string UserId)
     : IRequest<PageResponse<UserDto>>;

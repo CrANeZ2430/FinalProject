@@ -23,8 +23,7 @@ public class GetPostCommentsQueryHandler(
                     c.User != null
                         ? new UserDto(
                             c.User.UserName,
-                            c.User.Email,
-                            c.User.PasswordHash)
+                            c.User.Email)
                         : null,
                     c.Content,
                     c.LikeCount));

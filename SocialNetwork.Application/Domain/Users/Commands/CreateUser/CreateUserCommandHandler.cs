@@ -11,23 +11,21 @@ internal class CreateUserCommandHandler(
     IUsersRepository userRepository,
     IUnitOfWork unitOfWork,
     IEmailMustBeUniqueChecker emailChecker) 
-    : IRequestHandler<CreateUserCommand, Guid>
+    : IRequestHandler<CreateUserCommand>
 {
-    public async Task<Guid> Handle(
+    public async Task Handle(
         CreateUserCommand command, 
         CancellationToken cancellationToken = default)
     {
         var data = new CreateUserData(
+            command.UserId,
             command.UserName,
             command.Email,
-            command.PasswordHash,
             command.ProfilePicturePath,
             command.Bio);
 
         var user = await User.Create(data, emailChecker);
         userRepository.Add(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return user.UserId;
     }
 }

@@ -10,37 +10,31 @@ internal class PostEntityTypeConfiguration : IEntityTypeConfiguration<Post>
     {
         builder.HasKey(x => x.PostId);
 
-        builder.Property(x => x.PostId)
-            .HasColumnOrder(1);
+        builder.Property(x => x.PostId);
 
         builder.Property(x => x.UserId)
-            .IsRequired(false)
-            .HasColumnOrder(2);
+            .HasMaxLength(50)
+            .IsRequired(false);
 
         builder.Property(x => x.Title)
             .HasMaxLength(50)
-            .IsRequired()
-            .HasColumnOrder(3);
+            .IsRequired();
 
         builder.Property(x => x.Content)
             .HasMaxLength(500)
-            .IsRequired()
-            .HasColumnOrder(4);
+            .IsRequired();
 
         builder.Property(x => x.ImagePath)
             .HasMaxLength(255)
-            .IsRequired(false)
-            .HasColumnOrder(5);
+            .IsRequired(false);
 
         builder.Property(x => x.LikeCount);
 
         builder.Property(x => x.CreationTime)
-            .IsRequired()
-            .HasColumnOrder(6);
+            .IsRequired();
 
         builder.Property(x => x.UpdateTime)
-            .IsRequired()
-            .HasColumnOrder(7);
+            .IsRequired();
 
         builder.HasOne(x => x.User)
             .WithMany(x => x.Posts)

@@ -3,5 +3,5 @@
 namespace SocialNetwork.Application.Domain.Users.Commands.DeleteUser;
 
 public record DeleteUserCommand(
-    Guid UserId)
+    string UserId)
     : IRequest;

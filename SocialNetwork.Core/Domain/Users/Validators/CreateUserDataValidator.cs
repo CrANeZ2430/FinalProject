@@ -30,10 +30,6 @@ public class CreateUserDataValidator : AbstractValidator<CreateUserData>
                 }
             });
 
-        RuleFor(x => x.PasswordHash)
-            .NotEmpty().WithMessage($"{nameof(CreateUserData.PasswordHash)} is required.")
-            .MinimumLength(6).WithMessage($"{nameof(CreateUserData.PasswordHash)} must be at least 6 characters long.");
-
         RuleFor(x => x.ProfilePicturePath)
             .NotEmpty().WithMessage($"{nameof(CreateUserData.ProfilePicturePath)} is required.")
             .Must(path => Uri.IsWellFormedUriString(path, UriKind.Relative))

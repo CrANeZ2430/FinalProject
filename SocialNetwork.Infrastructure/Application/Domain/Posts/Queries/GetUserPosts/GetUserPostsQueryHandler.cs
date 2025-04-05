@@ -21,7 +21,6 @@ public class GetUserPostsQueryHandler(
                     u.UserId,
                     u.UserName,
                     u.Email,
-                    u.PasswordHash,
                     u.ProfilePicturePath,
                     u.Bio,
                     u.CreationTime,

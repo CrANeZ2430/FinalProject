@@ -20,7 +20,7 @@ public class Comment : Entity
         string content,
         DateTime creationTime,
         DateTime updateTime,
-        Guid? userId,
+        string? userId,
         Guid postId)
     {
         CommentId = commentId;
@@ -37,7 +37,7 @@ public class Comment : Entity
     public int LikeCount { get; private set; }
     public DateTime CreationTime { get; init; }
     public DateTime UpdateTime { get; private set; }
-    public Guid? UserId { get; private set; }
+    public string? UserId { get; private set; }
     public Guid PostId { get; private set; }
     public Post Post => _post;
     public User? User => _user;

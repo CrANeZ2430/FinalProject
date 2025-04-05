@@ -18,14 +18,14 @@ internal class UsersRepository(SocialNetworkDbContext dbContext) : IUsersReposit
         dbContext.Remove(user);
     }
 
-    public async Task<User> GetById(Guid id, CancellationToken cancellationToken = default)
+    public async Task<User> GetById(string userId, CancellationToken cancellationToken = default)
     {
         return await dbContext.Users
-                    .FirstOrDefaultAsync(x => x.UserId == id, cancellationToken)
+                    .FirstOrDefaultAsync(x => x.UserId == userId, cancellationToken)
                     ?? throw new NotFoundException($"{nameof(User)} cannot be found.");
     }
 
-    public async Task<bool> UserExists(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<bool> UserExists(string userId, CancellationToken cancellationToken = default)
     {
         return await dbContext.Users
                     .AnyAsync(x => x.UserId == userId, cancellationToken);

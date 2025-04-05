@@ -2,5 +2,4 @@
 
 public record UserDto(
     string UserName,
-    string Email,
-    string PasswordHash);
+    string Email);

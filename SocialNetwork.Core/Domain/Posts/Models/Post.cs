@@ -21,7 +21,7 @@ public class Post : Entity
         string[]? imagePath,
         DateTime creationTime, 
         DateTime updateTime,
-        Guid? userId)
+        string? userId)
     {
         PostId = postId;
         UserId = userId;
@@ -40,7 +40,7 @@ public class Post : Entity
     public int LikeCount { get; private set; }
     public DateTime CreationTime { get; init; }
     public DateTime UpdateTime { get; private set; }
-    public Guid? UserId { get; private set; }
+    public string? UserId { get; private set; }
     public User? User => _user;
     public IReadOnlyCollection<Comment> Comments => _comments;
 

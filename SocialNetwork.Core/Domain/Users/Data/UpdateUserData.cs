@@ -3,6 +3,5 @@
 public record UpdateUserData(
     string UserName,
     string Email,
-    string PasswordHash,
     string ProfilePicturePath,
     string Bio);

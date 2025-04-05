@@ -21,7 +21,6 @@ public class UpdateUserCommandHandler(
         var data = new UpdateUserData(
             command.UserName,
             command.Email,
-            command.PasswordHash,
             command.ProfilePicturePath,
             command.Bio);
 

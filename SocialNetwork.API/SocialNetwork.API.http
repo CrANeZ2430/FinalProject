@@ -1,4 +1,0 @@
-@baseUrl = http://localhost:7265
-
-GET {{baseUrl}}/api/posts?page=1&pageSize=10
-Accept: application/json

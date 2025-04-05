@@ -3,7 +3,7 @@
 namespace SocialNetwork.Application.Domain.Users.Commands.UpdateUser;
 
 public record  UpdateUserCommand(
-    Guid UserId,
+    string UserId,
     string UserName,
     string Email,
     string PasswordHash,

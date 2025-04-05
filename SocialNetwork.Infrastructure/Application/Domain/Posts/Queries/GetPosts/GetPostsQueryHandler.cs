@@ -30,16 +30,14 @@ public class GetPostsQueryHandler(
                 p.User != null
                     ? new UserDto(
                         p.User.UserName,
-                        p.User.Email,
-                        p.User.PasswordHash)
+                        p.User.Email)
                     : null,
                 p.Comments
                     .Select(c => new CommentDto(
                         c.User != null
                             ? new UserDto(
                                 c.User.UserName,
-                                c.User.Email,
-                                c.User.PasswordHash)
+                                c.User.Email)
                             : null,
                         c.Content,
                         c.LikeCount))

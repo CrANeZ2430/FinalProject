@@ -11,6 +11,7 @@ internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.HasKey(x => x.UserId);
 
         builder.Property(x => x.UserId)
+            .HasMaxLength(50)
             .HasColumnOrder(1);
 
         builder.Property(x => x.UserName)
@@ -25,24 +26,19 @@ internal class UserEntityTypeConfiguration : IEntityTypeConfiguration<User>
         builder.HasIndex(x => x.Email)
             .IsUnique();
 
-        builder.Property(x => x.PasswordHash)
-            .HasMaxLength(64)
-            .IsRequired()
-            .HasColumnOrder(4);
-
         builder.Property(x => x.ProfilePicturePath)
             .HasMaxLength(255)
             .IsRequired()
-            .HasColumnOrder(5);
+            .HasColumnOrder(4);
 
         builder.Property(x => x.Bio)
             .HasMaxLength(300)
             .IsRequired(false)
-            .HasColumnOrder(6);
+            .HasColumnOrder(5);
 
         builder.Property(x => x.CreationTime)
             .IsRequired()
-            .HasColumnOrder(7);
+            .HasColumnOrder(6);
 
         builder.HasMany(x => x.Posts)
             .WithOne(x => x.User)

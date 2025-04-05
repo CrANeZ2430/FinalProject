@@ -1,6 +1,6 @@
 ﻿namespace SocialNetwork.Core.Domain.Comments.Data;
 
 public record CreateCommentData(
-    Guid UserId,
+    string UserId,
     Guid PostId,
     string Content);

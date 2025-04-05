@@ -6,5 +6,5 @@ public record CreatePostCommand(
     string Title,
     string Content,
     string[]? ImagePath,
-    Guid UserId)
+    string UserId)
     : IRequest<Guid>;

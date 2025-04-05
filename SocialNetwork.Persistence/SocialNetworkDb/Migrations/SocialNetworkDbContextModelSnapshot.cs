@@ -18,7 +18,7 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("socialNetwork")
-                .HasAnnotation("ProductVersion", "8.0.13")
+                .HasAnnotation("ProductVersion", "8.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -27,34 +27,28 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                 {
                     b.Property<Guid>("CommentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnOrder(1);
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(300)
-                        .HasColumnType("character varying(300)")
-                        .HasColumnOrder(4);
+                        .HasColumnType("character varying(300)");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnOrder(6);
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("LikeCount")
-                        .HasColumnType("integer")
-                        .HasColumnOrder(5);
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("PostId")
-                        .HasColumnType("uuid")
-                        .HasColumnOrder(3);
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnOrder(7);
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnOrder(2);
+                    b.Property<string>("UserId")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("CommentId");
 
@@ -69,23 +63,19 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                 {
                     b.Property<Guid>("PostId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnOrder(1);
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(500)
-                        .HasColumnType("character varying(500)")
-                        .HasColumnOrder(4);
+                        .HasColumnType("character varying(500)");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnOrder(6);
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string[]>("ImagePath")
                         .HasMaxLength(255)
-                        .HasColumnType("text[]")
-                        .HasColumnOrder(5);
+                        .HasColumnType("text[]");
 
                     b.Property<int>("LikeCount")
                         .HasColumnType("integer");
@@ -93,16 +83,14 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("character varying(50)")
-                        .HasColumnOrder(3);
+                        .HasColumnType("character varying(50)");
 
                     b.Property<DateTime>("UpdateTime")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnOrder(7);
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnOrder(2);
+                    b.Property<string>("UserId")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("PostId");
 
@@ -113,19 +101,19 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
 
             modelBuilder.Entity("SocialNetwork.Core.Domain.Users.Models.User", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
+                    b.Property<string>("UserId")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnOrder(1);
 
                     b.Property<string>("Bio")
                         .HasMaxLength(300)
                         .HasColumnType("character varying(300)")
-                        .HasColumnOrder(6);
+                        .HasColumnOrder(5);
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -133,17 +121,11 @@ namespace SocialNetwork.Persistence.SocialNetworkDb.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnOrder(3);
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)")
-                        .HasColumnOrder(4);
-
                     b.Property<string>("ProfilePicturePath")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(4);
 
                     b.Property<string>("UserName")
                         .IsRequired()

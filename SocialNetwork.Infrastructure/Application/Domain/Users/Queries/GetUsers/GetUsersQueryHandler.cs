@@ -23,7 +23,6 @@ internal class GetUsersQueryHandler(
                 u.UserId,
                 u.UserName,
                 u.Email,
-                u.PasswordHash,
                 u.ProfilePicturePath,
                 u.Bio,
                 u.CreationTime,
@@ -39,7 +38,6 @@ internal class GetUsersQueryHandler(
                                     c.User.UserId,
                                     c.User.UserName,
                                     c.User.Email,
-                                    c.User.PasswordHash,
                                     c.User.ProfilePicturePath,
                                     c.User.Bio,
                                     c.User.CreationTime

@@ -1,0 +1,27 @@
+﻿@model SocialNetwork.API.MVC.Models.UserProfile
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="container mt-5 user-profile">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-primary text-white">
+                    <h2>@ViewData["Title"]</h2>
+                </div>
+                <div class="card-body d-flex flex-column align-items-center">
+                    <img src="@Model.ProfileImage" alt="Profile Image" class="profile-image mb-4 rounded-circle border border-4 border-primary" style="width: 150px; height: 150px;">
+                    <div class="user-info text-center">
+                        <h3 class="mb-2">@Model.Name</h3>
+                        <p><i class="glyphicon glyphicon-user"></i> @Model.UserId</p>
+                        <p><i class="glyphicon glyphicon-envelope"></i> @Model.EmailAddress</p>
+                    </div>
+                    <form asp-action="DeleteUser" method="post" class="mt-4">
+                        <button type="submit" class="btn btn-danger btn-lg">Delete Account</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
