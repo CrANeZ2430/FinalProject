@@ -18,8 +18,19 @@
                     </div>
                     <div class="bio-section mt-3 text-center">
                         <h4>Bio:</h4>
-                        <p>@Model.Bio</p>
+                        @if (string.IsNullOrEmpty(Model.Bio))
+                        {
+                            <p class="text-muted">Bio has not been created yet.</p>
+                        }
+                        else
+                        {
+                            <p>@Model.Bio</p>
+                        }
                     </div>
+
+                    <form asp-area="" asp-controller="Users" asp-action="EditProfile" method="get" class="mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">Update Profile</button>
+                    </form>
 
                     <form asp-area="" asp-controller="Users" asp-action="DeleteUser" method="post" class="mt-4">
                         <button type="submit" class="btn btn-danger btn-lg">Delete Account</button>

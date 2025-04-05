@@ -2,6 +2,5 @@
 
 public record UpdateUserData(
     string UserName,
-    string Email,
-    string ProfilePicturePath,
+    //string ProfilePicturePath,
     string Bio);

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.MVC.Models;
 using SocialNetwork.Application.Domain.Users.Commands.CreateUser;
 using SocialNetwork.Application.Domain.Users.Commands.DeleteUser;
+using SocialNetwork.Application.Domain.Users.Commands.UpdateUser;
 using SocialNetwork.Application.Domain.Users.Queries.GetUserById;
 using SocialNetwork.Application.Domain.Users.Queries.GetUsers;
 using System.Security.Claims;
@@ -64,6 +65,22 @@ public class UsersController(
         return View(userProfile);
     }
 
+    public async Task<IActionResult> GetUsers(
+        int page = 1,
+        int pageSize = 10,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetUsersQuery(page, pageSize);
+        var users = await mediator.Send(query, cancellationToken);
+
+        var u = users.Data.Select(u => new UserViewModel(
+            u.UserName,
+            u.ProfilePicturePath,
+            0));
+
+        return View(u);
+    }
+
     [Authorize]
     public async Task<IActionResult> AddUser(
         CancellationToken cancellationToken = default)
@@ -93,6 +110,16 @@ public class UsersController(
         return RedirectToAction("Index", "Home");
     }
 
+    public async Task<IActionResult> UpdateUser()
+    {
+        var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        //var command = new UpdateUserCommand(
+        //    userId,
+        //    );
+
+        return RedirectToAction("UserProfile", "Users");
+    }
+
     [Authorize]
     public async Task DeleteUser(
         CancellationToken cancellationToken = default)
@@ -108,21 +135,5 @@ public class UsersController(
 
         await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    }
-
-    public async Task<IActionResult> GetUsers(
-        int page = 1,
-        int pageSize = 10,
-        CancellationToken cancellationToken = default)
-    {
-        var query = new GetUsersQuery(page, pageSize);
-        var users = await mediator.Send(query, cancellationToken);
-
-        var u = users.Data.Select(u => new UserViewModel(
-            u.UserName,
-            u.ProfilePicturePath,
-            0));
-
-        return View(u);
     }
 }

@@ -20,8 +20,6 @@ public class UpdateUserCommandHandler(
 
         var data = new UpdateUserData(
             command.UserName,
-            command.Email,
-            command.ProfilePicturePath,
             command.Bio);
 
         await user.Update(data, emailChecker);

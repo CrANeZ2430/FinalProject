@@ -14,26 +14,10 @@ public class UpdateUserDataValidator : AbstractValidator<UpdateUserData>
     .NotEmpty().WithMessage($"{nameof(UpdateUserData.UserName)} is required.")
     .MaximumLength(50).WithMessage($"{nameof(UpdateUserData.UserName)} cannot exceed 50 characters.");
 
-        RuleFor(x => x.Email)
-            .NotEmpty().WithMessage($"{nameof(UpdateUserData.Email)} is required.")
-            .MaximumLength(50).WithMessage($"{nameof(UpdateUserData.Email)} cannot exceed 50 characters.")
-            .EmailAddress().WithMessage($"{nameof(UpdateUserData.Email)} must be a valid email address.")
-            .CustomAsync(async (email, context, cancellationToken) =>
-            {
-                var checkResult = await new EmailMustBeUniqueBusinessRule(email, emailChecker).CheckAsync(cancellationToken);
-
-                if (checkResult.IsSuccess) return;
-
-                foreach (var error in checkResult.Errors)
-                {
-                    context.AddFailure(new ValidationFailure(nameof(UpdateUserData.Email), error));
-                }
-            });
-
-        RuleFor(x => x.ProfilePicturePath)
-            .NotEmpty().WithMessage($"{nameof(UpdateUserData.ProfilePicturePath)} is required.")
-            .Must(path => Uri.IsWellFormedUriString(path, UriKind.Absolute))
-            .WithMessage($"{nameof(UpdateUserData.ProfilePicturePath)} must be a valid absolute URL.");
+        //RuleFor(x => x.ProfilePicturePath)
+        //    .NotEmpty().WithMessage($"{nameof(UpdateUserData.ProfilePicturePath)} is required.")
+        //    .Must(path => Uri.IsWellFormedUriString(path, UriKind.Absolute))
+        //    .WithMessage($"{nameof(UpdateUserData.ProfilePicturePath)} must be a valid absolute URL.");
 
         RuleFor(x => x.Bio)
             .MaximumLength(300).WithMessage($"{nameof(UpdateUserData.Bio)} cannot exceed 300 characters.");

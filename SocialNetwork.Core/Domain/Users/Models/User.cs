@@ -63,8 +63,7 @@ public class User : Entity
         await ValidateAsync(new UpdateUserDataValidator(emailChecker), data, cancellationToken);
 
         UserName = data.UserName;
-        Email = data.Email;
-        ProfilePicturePath = data.ProfilePicturePath;
+        //ProfilePicturePath = data.ProfilePicturePath;
         Bio = data.Bio;
     }
 }
