@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.MVC.Models;
 using SocialNetwork.Application.Domain.Users.Commands.CreateUser;
 using SocialNetwork.Application.Domain.Users.Commands.DeleteUser;
+using SocialNetwork.Application.Domain.Users.Queries.GetUserById;
+using SocialNetwork.Application.Domain.Users.Queries.GetUsers;
 using System.Security.Claims;
 
 namespace SocialNetwork.API.MVC.Controllers;
 
 public class UsersController(
-    IMediator mediator) 
+    IMediator mediator)
     : Controller
 {
     public async Task Login(string returnUrl = "/", CancellationToken cancellationToken = default)
@@ -28,7 +30,7 @@ public class UsersController(
     {
         var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
             .WithParameter("screen_hint", "signup")
-            .WithRedirectUri(returnUrl)
+            .WithRedirectUri(Url.Action("AddUser", "Users"))
             .Build();
 
         await HttpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
@@ -50,15 +52,14 @@ public class UsersController(
         CancellationToken cancellationToken = default)
     {
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        var userName = User.Identity.Name;
-        var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
-        var profilePicture = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value;
+        var query = new GetUserByIdQuery(userId);
+        var user = await mediator.Send(query, cancellationToken);
 
-        var userProfile = new UserProfile(
-            userId,
-            userName,
-            email,
-            profilePicture);
+        var userProfile = new UserProfileModel(
+            user.UserName,
+            user.Email,
+            user.ProfilePicturePath,
+            user.Bio);
 
         return View(userProfile);
     }
@@ -107,5 +108,21 @@ public class UsersController(
 
         await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    }
+
+    public async Task<IActionResult> GetUsers(
+        int page = 1,
+        int pageSize = 10,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetUsersQuery(page, pageSize);
+        var users = await mediator.Send(query, cancellationToken);
+
+        var u = users.Data.Select(u => new UserViewModel(
+            u.UserName,
+            u.ProfilePicturePath,
+            0));
+
+        return View(u);
     }
 }

@@ -11,7 +11,7 @@ namespace SocialNetwork.API.MVC.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult AccessDenied()
         {
             return View();
         }

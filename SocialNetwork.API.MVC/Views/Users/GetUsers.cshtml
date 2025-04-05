@@ -1,0 +1,42 @@
+﻿@model IEnumerable<SocialNetwork.API.MVC.Models.UserViewModel>
+@{
+    ViewData["Title"] = "Hillel App Users";
+    var colors = new[] { "bg-warning", "bg-success" };
+    int colorIndex = 0;
+}
+
+<h2 class="mb-4 text-center text-primary fw-bold">@ViewData["Title"]</h2>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var user in Model)
+        {
+            var bgColor = colors[colorIndex % 2];
+            colorIndex++;
+
+            <div class="col">
+                <div class="card text-white @bgColor shadow-lg border-5 @bgColor h-100 rounded-4">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <div class="text-center mb-3">
+                            <img src="@user.ProfileImage" alt="Profile Image" class="rounded-circle border border-white" style="width: 80px; height: 80px; object-fit: cover;" />
+                        </div>
+                        <div class="text-center">
+                            <h5 class="card-title fw-bold">@user.UserName</h5>
+                        </div>
+                        <div class="text-center mt-3">
+                            <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+                                Posts: @user.PostCount
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-warning text-center">No users found.</div>
+}
+

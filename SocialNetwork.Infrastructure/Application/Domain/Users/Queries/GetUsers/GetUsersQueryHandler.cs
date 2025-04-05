@@ -8,9 +8,9 @@ namespace SocialNetwork.Infrastructure.Application.Domain.Users.Queries.GetUsers
 
 internal class GetUsersQueryHandler(
     SocialNetworkDbContext dbContext)
-    : IRequestHandler<GetUsersQuery, PageResponse<PostUserDto[]>>
+    : IRequestHandler<GetUsersQuery, PageResponse<UserDto[]>>
 {
-    public async Task<PageResponse<PostUserDto[]>> Handle(
+    public async Task<PageResponse<UserDto[]>> Handle(
         GetUsersQuery query, 
         CancellationToken cancellationToken = default)
     {
@@ -19,13 +19,13 @@ internal class GetUsersQueryHandler(
         var sqlQuery = dbContext.Users
             .AsNoTracking()
             .OrderBy(u => u.UserName)
-            .Select(u => new PostUserDto(
+            .Select(u => new UserDto(
                 u.UserId,
                 u.UserName,
                 u.Email,
                 u.ProfilePicturePath,
                 u.Bio,
-                u.CreationTime,
+                u.CreationTime/*,
                 u.Posts
                     .Select(p => new PostDto(
                         p.Title,
@@ -46,7 +46,7 @@ internal class GetUsersQueryHandler(
                                 c.LikeCount))
                             .ToArray()))
                     .ToArray()
-            ))
+            */))
             .Skip(skip)
             .Take(query.PageSize);
 
@@ -55,7 +55,7 @@ internal class GetUsersQueryHandler(
         var users = await sqlQuery
                 .ToArrayAsync(cancellationToken);
 
-        return new PageResponse<PostUserDto[]>(count, users);
+        return new PageResponse<UserDto[]>(count, users);
 
     }
 }

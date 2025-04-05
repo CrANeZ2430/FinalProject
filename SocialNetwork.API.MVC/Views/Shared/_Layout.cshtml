@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SocialNetwork.API.MVC</title>
+    <title>Hillel App</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.Layout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SocialNetwork.API.MVC.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -20,27 +20,30 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="GetUsers">Users</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        @if(User.Identity.IsAuthenticated)
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Posts" asp-action="AddPost">Make a post</a>
+						</li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        @if (User.Identity.IsAuthenticated)
                         {
-                            <li>
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="UserProfile">UserProfile</a>
+                            <li class="nav-item me-2">
+                                <a class="btn btn-primary" asp-area="" asp-controller="Users" asp-action="UserProfile">User Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Logout">Logout</a>
+                                <a class="btn btn-primary" asp-area="" asp-controller="Users" asp-action="Logout">Logout</a>
                             </li>
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
+                            <li class="nav-item me-2">
+                                <a class="btn btn-primary" asp-area="" asp-controller="Users" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Signup">Signup</a>
+                                <a class="btn btn-primary" asp-area="" asp-controller="Users" asp-action="Signup">Signup</a>
                             </li>
                         }
                     </ul>
@@ -56,7 +59,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - SocialNetwork.API.MVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - SocialNetwork.API.MVC - <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -32,8 +32,8 @@ public class UpdateUserDataValidator : AbstractValidator<UpdateUserData>
 
         RuleFor(x => x.ProfilePicturePath)
             .NotEmpty().WithMessage($"{nameof(UpdateUserData.ProfilePicturePath)} is required.")
-            .Must(path => Uri.IsWellFormedUriString(path, UriKind.Relative))
-            .WithMessage($"{nameof(UpdateUserData.ProfilePicturePath)} must be a valid relative URL.");
+            .Must(path => Uri.IsWellFormedUriString(path, UriKind.Absolute))
+            .WithMessage($"{nameof(UpdateUserData.ProfilePicturePath)} must be a valid absolute URL.");
 
         RuleFor(x => x.Bio)
             .MaximumLength(300).WithMessage($"{nameof(UpdateUserData.Bio)} cannot exceed 300 characters.");

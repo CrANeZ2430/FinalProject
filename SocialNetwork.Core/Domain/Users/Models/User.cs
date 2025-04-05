@@ -44,7 +44,7 @@ public class User : Entity
         IEmailMustBeUniqueChecker emailChecker,
         CancellationToken cancellationToken = default)
     {
-        //await ValidateAsync(new CreateUserDataValidator(emailChecker), data, cancellationToken);
+        await ValidateAsync(new CreateUserDataValidator(emailChecker), data, cancellationToken);
 
         return new User(
             data.UserId,
