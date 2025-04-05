@@ -1,8 +1,16 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Welcome to SocialNetwork.API.MVC!";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center" style="background-color: #f0f8ff; padding: 50px 0;">
+    <h1 class="display-4" style="font-size: 3em; color: #333;">@ViewData["Title"]</h1>
+    <p style="font-size: 1.25em; color: #555;">
+        A powerful app for building modern web applications with <strong>ASP.NET Core</strong>.
+    </p>
+    <p style="font-size: 1.1em; color: #666;">
+        Explore and learn more about building web apps with ASP.NET Core by visiting the official documentation.
+    </p>
+    <a href="https://learn.microsoft.com/aspnet/core" class="btn btn-primary" style="font-size: 1.2em; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
+        Learn More
+    </a>
 </div>
