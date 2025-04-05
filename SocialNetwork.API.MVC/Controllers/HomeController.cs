@@ -11,6 +11,26 @@ namespace SocialNetwork.API.MVC.Controllers
             return View();
         }
 
+        public IActionResult EditUserProfile()
+        {
+            var model = new UserProfileFormViewModel(
+                "example", 
+                "example");
+
+            return View(model);
+        }
+
+        public IActionResult ValidationError()
+        {
+            var errorDetails = HttpContext.Items["ErrorDetails"] as object;
+            if (errorDetails != null)
+            {
+                // Pass the error details to the view
+                return View(errorDetails);
+            }
+
+            return View("ErrorGeneric"); // Fallback error view if no specific details
+        }
         public IActionResult AccessDenied()
         {
             return View();

@@ -56,7 +56,7 @@ public class UsersController(
         var query = new GetUserByIdQuery(userId);
         var user = await mediator.Send(query, cancellationToken);
 
-        var userProfile = new UserProfileModel(
+        var userProfile = new UserProfileViewModel(
             user.UserName,
             user.Email,
             user.ProfilePicturePath,
@@ -110,14 +110,19 @@ public class UsersController(
         return RedirectToAction("Index", "Home");
     }
 
-    public async Task<IActionResult> UpdateUser()
+    public async Task<IActionResult> UpdateUser(
+        UserProfileFormViewModel model,
+        CancellationToken cancellationToken = default)
     {
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        //var command = new UpdateUserCommand(
-        //    userId,
-        //    );
+        var command = new UpdateUserCommand(
+            userId,
+            model.UserName,
+            model.Bio);
 
-        return RedirectToAction("UserProfile", "Users");
+        await mediator.Send(command, cancellationToken);
+
+        return RedirectToAction("Index", "Home");
     }
 
     [Authorize]

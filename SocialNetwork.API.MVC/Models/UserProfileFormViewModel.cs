@@ -1,7 +1,5 @@
 ﻿namespace SocialNetwork.API.MVC.Models;
 
-public record UserProfileModel(
+public record UserProfileFormViewModel(
     string UserName,
-    string Email,
-    string ProfileImage,
     string Bio);

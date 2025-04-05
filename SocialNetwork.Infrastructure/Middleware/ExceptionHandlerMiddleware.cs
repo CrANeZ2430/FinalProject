@@ -31,3 +31,4 @@ public class ExceptionHandlerMiddleware(
         await JsonSerializer.SerializeAsync(context.Response.Body, exceptionResponse.Data);
     }
 }
+

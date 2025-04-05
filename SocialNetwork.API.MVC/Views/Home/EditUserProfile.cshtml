@@ -1,0 +1,25 @@
+﻿@model SocialNetwork.API.MVC.Models.UserProfileFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">@ViewData["Title"]</h2>
+
+    <form asp-action="EditProfile" method="post" class="p-4 border rounded shadow-lg bg-light">
+        <div class="mb-3">
+            <label for="UserName" class="form-label fs-5 fw-semibold">Username</label>
+            <input type="text" class="form-control form-control-lg p-3" id="UserName" name="UserName" value="@Model.UserName" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="Bio" class="form-label fs-5 fw-semibold">Bio</label>
+            <textarea class="form-control form-control-lg p-3" id="Bio" name="Bio" rows="6">@Model.Bio</textarea>
+        </div>
+
+        <div class="text-center">
+            <button asp-action="UpdateUser" asp-controller="Users" type="submit" class="btn btn-primary btn-lg px-4 py-2">Save Changes</button>
+        </div>
+    </form>
+</div>

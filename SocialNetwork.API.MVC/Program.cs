@@ -1,6 +1,7 @@
 using Auth0.AspNetCore.Authentication;
 using SocialNetwork.Application;
 using SocialNetwork.Infrastructure;
+using SocialNetwork.Infrastructure.Middleware;
 using SocialNetwork.Persistence.SocialNetworkDb;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +41,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCustomExceptionHandler(app.Environment);
 
 app.UseStatusCodePagesWithReExecute("/Home/AccessDenied");
 

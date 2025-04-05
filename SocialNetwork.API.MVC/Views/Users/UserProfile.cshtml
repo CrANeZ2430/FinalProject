@@ -1,4 +1,4 @@
-﻿@model SocialNetwork.API.MVC.Models.UserProfileModel
+﻿@model SocialNetwork.API.MVC.Models.UserProfileViewModel
 @{
     ViewData["Title"] = "User Profile";
 }
@@ -30,13 +30,13 @@
 
                     <div class="user-buttons">
                         <div class="user-button">
-                            <form asp-area="" asp-controller="Users" asp-action="EditProfile" method="get" class="mt-4">
+                            <form asp-area="" asp-controller="Home" asp-action="EditUserProfile" class="mt-4">
                                 <button type="submit" class="btn btn-primary btn-lg">Update Profile</button>
                             </form>
                         </div>
 
                         <div class="user-button">
-                            <form asp-area="" asp-controller="Users" asp-action="DeleteUser" method="post" class="mt-4">
+                            <form asp-area="" asp-controller="Users" asp-action="DeleteUser" class="mt-4">
                                 <button type="submit" class="btn btn-danger btn-lg">Delete Account</button>
                             </form>
                         </div>

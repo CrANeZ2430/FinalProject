@@ -22,9 +22,10 @@ footer {
 }
 
 .user-card {
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 .user-card:hover {
     transform: translateY(-10px);
+    opacity: 0.9;
 }
