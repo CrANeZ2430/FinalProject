@@ -1,82 +1,30 @@
-html {
-    padding: 0;
-    margin: 0;
-}
-
-/* General layout enhancements */
-body {
-    background: linear-gradient(to right, #f8f9fa, #e8f0fe);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding-bottom: 60px; /* Adjust padding to avoid overlap with footer */
-    min-height: 100vh; /* Ensure the body takes at least full screen height */
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-}
-
-/* Ensure the content grows to take available space */
-main {
-    flex-grow: 1;
-}
-
-/* Footer styles */
 footer {
-    background-color: #f8f9fa;
-    padding: 1rem 0;
-    position: fixed; /* Allow footer to be positioned at the bottom */
+    background-color: #f8f9fa; /* Set background color */
+    position: relative; /* Remove fixed positioning to ensure it scrolls with the page */
+    width: 100%; /* Ensure footer takes up full width */
+    color: #6c757d; /* Set text color */
+    font-size: 0.9rem; /* Set font size */
     bottom: 0;
-    font-size: 0.9rem;
-    color: #6c757d;
-    width: 100%;
-    display: flex;
-    margin-top: auto; /* Push footer to the bottom of the page */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space out items */
 }
 
-/* Header/Nav */
-.navbar {
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+.user-buttons {
+    display: flex; /* Enable flexbox layout */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 10px; /* Optional: Adds space between the buttons */
+    width: 100%; /* Ensure the container takes up full width */
 }
 
-.nav-link {
-    font-weight: 500;
-    transition: color 0.2s ease-in-out;
+.user-button {
+    width: auto; /* Let the buttons take up their natural width */
+    margin-bottom: 10px; /* Add space below the buttons */
 }
 
-    .nav-link:hover {
-        color: #0d6efd;
-    }
-
-/* Page Title */
-h2 {
-    font-size: 2rem;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #0d6efd;
+.user-card {
+    transition: transform 0.2s ease-in-out;
 }
 
-/* Colorful user cards */
-.card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-    .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .card .card-title {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
-    }
-
-.badge {
-    font-size: 0.9rem;
-}
-
-/* Responsive layout tweaks */
-@media (max-width: 576px) {
-    .card .card-title {
-        font-size: 1rem;
-    }
+.user-card:hover {
+    transform: translateY(-10px);
 }
