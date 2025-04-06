@@ -8,34 +8,50 @@ namespace SocialNetwork.Infrastructure.Application.Domain.Comments.Queries.GetPo
 
 public class GetPostCommentsQueryHandler(
     SocialNetworkDbContext dbContext)
-    : IRequestHandler<GetPostCommentsQuery, PageResponse<CommentDto[]>>
+    : IRequestHandler<GetPostCommentsQuery, PageResponse<PostDto>>
 {
-    public async Task<PageResponse<CommentDto[]>> Handle(
+    public async Task<PageResponse<PostDto>> Handle(
         GetPostCommentsQuery query, 
         CancellationToken cancellationToken = default)
     {
-        var sqlQuery = dbContext.Comments
-                .AsNoTracking()
-                .Where(c => c.PostId == query.PostId)
-                .OrderBy(c => c.CreationTime)
-                .Select(c => new CommentDto(
-                    c.CommentId,
-                    c.User != null
-                        ? new UserDto(
-                            c.User.UserName,
-                            c.User.Email)
-                        : null,
-                    c.Content,
-                    c.LikeCount));
+        var postEntity = await dbContext.Posts
+            .Include(p => p.User)
+            .Where(p => p.PostId == query.PostId)
+            .FirstOrDefaultAsync(cancellationToken);
 
-        var count = await sqlQuery
-                .CountAsync(cancellationToken);
+        var commentsQuery = dbContext.Comments
+            .Where(c => c.PostId == query.PostId)
+            .OrderByDescending(c => c.CreationTime)
+            .Include(c => c.User)
+            .Select(c => new CommentDto(
+                c.CommentId,
+                c.User != null
+                    ? new UserDto(c.User.UserName, c.User.ProfilePicturePath)
+                    : null,
+                c.Content,
+                c.LikeCount,
+                c.CreationTime
+            ));
 
-        var comments = await sqlQuery
-                .Skip(query.PageSize * (query.Page - 1))
-                .Take(query.PageSize)
-                .ToArrayAsync(cancellationToken);
+        var totalCount = await commentsQuery.CountAsync(cancellationToken);
 
-        return new PageResponse<CommentDto[]>(count, comments);
+        var comments = await commentsQuery
+            .Skip((query.Page - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .ToArrayAsync(cancellationToken);
+
+        var post = new PostDto(
+            postEntity.PostId,
+            postEntity.Title,
+            postEntity.Content,
+            postEntity.LikeCount,
+            postEntity.CreationTime,
+            new UserDto(
+                postEntity.User.UserName, 
+                postEntity.User.ProfilePicturePath),
+            comments
+        );
+
+        return new PageResponse<PostDto>(totalCount, post);
     }
 }

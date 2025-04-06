@@ -7,4 +7,4 @@ public record GetPostCommentsQuery(
     Guid PostId,
     int Page,
     int PageSize)
-    : IRequest<PageResponse<CommentDto[]>>;
+    : IRequest<PageResponse<PostDto>>;

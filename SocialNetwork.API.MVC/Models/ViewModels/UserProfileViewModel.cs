@@ -1,7 +1,7 @@
-﻿namespace SocialNetwork.API.MVC.Models;
+﻿namespace SocialNetwork.API.MVC.Models.ViewModels;
 
 public record UserProfileViewModel(
     string UserName,
     string Email,
-    string ProfileImage,
+    string ProfilePicturePath,
     string Bio);

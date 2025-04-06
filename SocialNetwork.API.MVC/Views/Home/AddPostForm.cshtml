@@ -1,4 +1,5 @@
-﻿@model SocialNetwork.API.MVC.Models.AddPostFormViewModel
+﻿@using SocialNetwork.API.MVC.Models.ViewModels
+@model AddPostFormViewModel
 
 @{
     ViewData["Title"] = "Add New Post";
@@ -26,7 +27,7 @@
                         </div>
 
                         <div class="text-center mt-4">
-                            <button asp-action="AddPost" asp-controller="PostsController" type="submit" class="btn btn-success btn-lg px-4">Publish</button>
+                            <button asp-action="AddPost" asp-controller="Posts" type="submit" class="btn btn-success btn-lg px-4">Publish</button>
                         </div>
                     </form>
                 </div>

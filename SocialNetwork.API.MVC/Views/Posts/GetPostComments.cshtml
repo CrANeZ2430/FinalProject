@@ -1,0 +1,67 @@
+﻿@using SocialNetwork.API.MVC.Models.Dtos
+@using System.Security.Claims
+@model PostCommentsDto
+
+@{
+    ViewData["Title"] = "Post Comments";
+}
+
+<div class="container mt-5">
+    <!-- Post Header -->
+    <div class="card shadow-lg rounded-4 border-0 mb-4">
+        <div class="card-header bg-primary text-white d-flex align-items-center gap-3 rounded-top-4">
+            <img src="@Model.Post.User.ProfilePicturePath" alt="User Profile" class="rounded-circle border border-white" style="width: 50px; height: 50px; object-fit: cover;">
+            <div>
+                <h5 class="mb-0">@Model.Post.User.UserName</h5>
+                <small class="text-white-50">@Model.Post.CreationTime.ToString("g")</small>
+            </div>
+        </div>
+        <div class="card-body">
+            <h4 class="card-title fw-bold">@Model.Post.Title</h4>
+            <p class="card-text">@Model.Post.Content</p>
+        </div>
+        <div class="card-footer bg-light d-flex justify-content-between rounded-bottom-4">
+            <div>
+                <i class="fas fa-thumbs-up text-success"></i>
+                <span class="ms-2">@Model.Post.LikeCount Likes</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <h5 class="text-secondary mb-3">Comments (@Model.Comments.Length)</h5>
+
+    @if (Model.Comments.Any())
+    {
+        <ul class="list-group mb-4">
+            @foreach (var comment in Model.Comments)
+            {
+                <li class="list-group-item d-flex align-items-start gap-3">
+                    <img src="@comment.User.ProfilePicturePath" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                    <div>
+                        <strong>@comment.User.UserName</strong>
+                        <small class="text-muted d-block">@comment.CreationTime.ToString("g")</small>
+                        <p class="mb-0">@comment.Content</p>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="alert alert-info">No comments yet. Be the first to comment!</div>
+    }
+
+    <!-- (Optional) Add Comment Form -->
+    <form asp-action="AddComment" asp-controller="Comments" method="post" class="card p-3 shadow-sm">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="postId" value="@Model.Post.PostId" />
+        <input type="hidden" name="userId" value="@User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;" />
+        <div class="mb-3">
+            <label for="Content" class="form-label">Add a comment:</label>
+            <textarea name="Content" class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+    </form>
+</div>
+

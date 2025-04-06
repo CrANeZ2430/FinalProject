@@ -18,31 +18,20 @@ public class GetPostsQueryHandler(
 
         var sqlQuery = dbContext.Posts
             .AsNoTracking()
-            .OrderBy(p => p.Title)
+            .OrderBy(p => p.CreationTime)
             .Select(p => new PostDto(
                 p.PostId,
                 p.Title,
                 p.Content,
-                p.ImagePath,
+                //p.ImagePath,
                 p.LikeCount,
                 p.CreationTime,
-                p.UpdateTime,
+                //p.UpdateTime,
                 p.User != null
                     ? new UserDto(
                         p.User.UserName,
-                        p.User.Email)
-                    : null,
-                p.Comments
-                    .Select(c => new CommentDto(
-                        c.User != null
-                            ? new UserDto(
-                                c.User.UserName,
-                                c.User.Email)
-                            : null,
-                        c.Content,
-                        c.LikeCount))
-                    .ToArray()
-            ))
+                        p.User.ProfilePicturePath)
+                    : null))
             .Skip(skip)
             .Take(query.PageSize);
 

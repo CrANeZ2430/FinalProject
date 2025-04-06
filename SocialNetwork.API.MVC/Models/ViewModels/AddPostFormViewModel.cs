@@ -1,4 +1,4 @@
-﻿namespace SocialNetwork.API.MVC.Models;
+﻿namespace SocialNetwork.API.MVC.Models.ViewModels;
 
 public record AddPostFormViewModel(
     string Title,

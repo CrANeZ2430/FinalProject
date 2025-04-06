@@ -4,4 +4,5 @@ public record CommentDto(
     Guid CommentId,
     UserDto? User,
     string Content,
-    int CommentLikeCount);
+    int LikeCount,
+    DateTime CreationTime);

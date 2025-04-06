@@ -2,4 +2,4 @@
 
 public record UserDto(
     string UserName,
-    string Email);
+    string ProfilePicturePath);

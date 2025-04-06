@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SocialNetwork.API.MVC.Models;
+using SocialNetwork.API.MVC.Models.ViewModels;
 using SocialNetwork.Application.Domain.Users.Commands.CreateUser;
 using SocialNetwork.Application.Domain.Users.Commands.DeleteUser;
 using SocialNetwork.Application.Domain.Users.Commands.UpdateUser;
@@ -65,6 +65,22 @@ public class UsersController(
         return View(userProfile);
     }
 
+    public async Task<IActionResult> GetUserDetails(
+        string userId,
+        CancellationToken cancellationToken = default)
+    {
+        var user = new GetUserByIdQuery(userId);
+        var userDetails = await mediator.Send(user, cancellationToken);
+
+        var model = new UserProfileViewModel(
+            userDetails.UserName,
+            userDetails.Email,
+            userDetails.ProfilePicturePath,
+            userDetails.Bio);
+
+        return View(model);
+    }
+
     public async Task<IActionResult> GetUsers(
         int page = 1,
         int pageSize = 10,
@@ -73,12 +89,13 @@ public class UsersController(
         var query = new GetUsersQuery(page, pageSize);
         var users = await mediator.Send(query, cancellationToken);
 
-        var u = users.Data.Select(u => new UserViewModel(
+        var models = users.Data.Select(u => new GeneralUserViewModel(
+            u.UserId,
             u.UserName,
             u.ProfilePicturePath,
             0));
 
-        return View(u);
+        return View(models);
     }
 
     [Authorize]
