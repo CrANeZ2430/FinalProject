@@ -3,5 +3,5 @@
 namespace SocialNetwork.API.MVC.Models.Dtos;
 
 public record PostCommentsDto(
-    PostViewModel Post,
+    CommentsPostViewModel Post,
     CommentViewModel[] Comments);

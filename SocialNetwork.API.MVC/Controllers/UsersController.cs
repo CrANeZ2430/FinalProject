@@ -93,7 +93,8 @@ public class UsersController(
             u.UserId,
             u.UserName,
             u.ProfilePicturePath,
-            0));
+            u.PostCount,
+            u.CommentCount));
 
         return View(models);
     }

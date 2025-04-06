@@ -4,4 +4,5 @@ public record GeneralUserViewModel(
     string UserId,
     string UserName,
     string ProfilePicturePath,
-    int PostCount);
+    int PostCount,
+    int CommentCount);

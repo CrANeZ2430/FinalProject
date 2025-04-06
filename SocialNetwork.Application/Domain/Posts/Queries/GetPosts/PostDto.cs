@@ -6,6 +6,7 @@ public record PostDto(
     string Content,
     //string[]? ImagePath,
     int LikeCount,
+    int CommentCount,
     DateTime CreationTime,
     //DateTime UpdateTime,
     UserDto? User);

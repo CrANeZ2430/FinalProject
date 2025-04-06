@@ -10,11 +10,22 @@
     <!-- Post Header -->
     <div class="card shadow-lg rounded-4 border-0 mb-4">
         <div class="card-header bg-primary text-white d-flex align-items-center gap-3 rounded-top-4">
-            <img src="@Model.Post.User.ProfilePicturePath" alt="User Profile" class="rounded-circle border border-white" style="width: 50px; height: 50px; object-fit: cover;">
-            <div>
-                <h5 class="mb-0">@Model.Post.User.UserName</h5>
-                <small class="text-white-50">@Model.Post.CreationTime.ToString("g")</small>
-            </div>
+            @if(Model.Post.User != null && !string.IsNullOrEmpty(Model.Post.User.ProfilePicturePath))
+            {
+                <img src="@Model.Post.User.ProfilePicturePath" alt="User Profile" class="rounded-circle border border-white" style="width: 50px; height: 50px; object-fit: cover;">
+                <div>
+                    <h5 class="mb-0">@Model.Post.User.UserName</h5>
+                    <small class="text-white-50">@Model.Post.CreationTime.ToString("g")</small>
+                </div>
+            }
+            else
+            {
+                <i class="bi bi-person-circle" style="font-size: 50px;"></i>
+                <div>
+                    <h5 class="mb-0">[нелице]</h5>
+                    <small class="text-white-50">@Model.Post.CreationTime.ToString("g")</small>
+                </div>
+            }
         </div>
         <div class="card-body">
             <h4 class="card-title fw-bold">@Model.Post.Title</h4>
@@ -30,19 +41,31 @@
 
     <!-- Comments Section -->
     <h5 class="text-secondary mb-3">Comments (@Model.Comments.Length)</h5>
-
+    
     @if (Model.Comments.Any())
     {
         <ul class="list-group mb-4">
             @foreach (var comment in Model.Comments)
             {
                 <li class="list-group-item d-flex align-items-start gap-3">
-                    <img src="@comment.User.ProfilePicturePath" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
-                    <div>
-                        <strong>@comment.User.UserName</strong>
-                        <small class="text-muted d-block">@comment.CreationTime.ToString("g")</small>
-                        <p class="mb-0">@comment.Content</p>
-                    </div>
+                    @if (comment.User != null && !string.IsNullOrEmpty(comment.User.ProfilePicturePath))
+                    {
+                        <img src="@comment.User.ProfilePicturePath" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                        <div>
+                            <strong>@comment.User.UserName</strong>
+                            <small class="text-muted d-block">@comment.CreationTime.ToString("g")</small>
+                            <p class="mb-0">@comment.Content</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <i class="bi bi-person-circle" style="font-size: 50px;"></i>
+                        <div>
+							<strong>[нелице]</strong>
+                            <small class="text-muted d-block">@comment.CreationTime.ToString("g")</small>
+                            <p class="mb-0">@comment.Content</p>
+                        </div>
+                    }
                 </li>
             }
         </ul>

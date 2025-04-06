@@ -46,9 +46,11 @@ public class GetPostCommentsQueryHandler(
             postEntity.Content,
             postEntity.LikeCount,
             postEntity.CreationTime,
-            new UserDto(
-                postEntity.User.UserName, 
-                postEntity.User.ProfilePicturePath),
+            postEntity.User != null
+            ? new UserDto(
+                postEntity.User.UserName,
+                postEntity.User.ProfilePicturePath)
+            : null,
             comments
         );
 

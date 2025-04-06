@@ -24,29 +24,10 @@ internal class GetUsersQueryHandler(
                 u.UserName,
                 u.Email,
                 u.ProfilePicturePath,
-                u.Bio,
-                u.CreationTime/*,
-                u.Posts
-                    .Select(p => new PostDto(
-                        p.Title,
-                        p.Content,
-                        p.ImagePath,
-                        p.LikeCount,
-                        p.Comments
-                            .Select(c => new CommentDto(
-                                new CommentUserDto(
-                                    c.User.UserId,
-                                    c.User.UserName,
-                                    c.User.Email,
-                                    c.User.ProfilePicturePath,
-                                    c.User.Bio,
-                                    c.User.CreationTime
-                                ),
-                                c.Content,
-                                c.LikeCount))
-                            .ToArray()))
-                    .ToArray()
-            */))
+                u.Bio, 
+                u.Posts.Count(),
+                u.Comments.Count(),
+                u.CreationTime))
             .Skip(skip)
             .Take(query.PageSize);
 

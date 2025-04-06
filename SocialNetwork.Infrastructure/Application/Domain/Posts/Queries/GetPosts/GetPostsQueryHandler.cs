@@ -25,6 +25,7 @@ public class GetPostsQueryHandler(
                 p.Content,
                 //p.ImagePath,
                 p.LikeCount,
+                p.Comments.Count(),
                 p.CreationTime,
                 //p.UpdateTime,
                 p.User != null

@@ -6,5 +6,6 @@ public record UserDto(
     string Email,
     string ProfilePicturePath,
     string? Bio,
-    DateTime CreationDate/*,
-    PostDto[] Posts*/);
+    int PostCount,
+    int CommentCount,
+    DateTime CreationDate);

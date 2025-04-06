@@ -30,12 +30,19 @@
                         <div class="text-center">
                             <h5 class="card-title fw-bold">@user.UserName</h5>
                         </div>
-                        <div class="text-center mt-3">
-                            <span class="badge bg-light text-dark px-3 py-2 rounded-pill">
-                                Posts: @user.PostCount
-                            </span>
-                        </div>
-                    </div>
+						<div class="user-buttons">
+							<div class="text-center mt-3 user-button">
+								<span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+									Posts: @user.PostCount
+								</span>
+							</div>
+							<div class="text-center mt-3 user-button">
+								<span class="badge bg-light text-dark px-3 py-2 rounded-pill">
+									Comments: @user.CommentCount
+								</span>
+							</div>
+						</div>
+					</div>
                 </div>
             </div>
         }

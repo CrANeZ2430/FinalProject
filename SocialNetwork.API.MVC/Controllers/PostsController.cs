@@ -42,12 +42,14 @@ public class PostsController(
             p.PostId,
             p.Title,
             p.Content,
-            //p.CommentCount,
             p.LikeCount,
+            p.CommentCount,
             p.CreationTime,
-            new UserViewModel(
-                p.User.UserName,
-                p.User.ProfileImagePath)
+            p.User != null
+                    ? new UserViewModel(
+                        p.User.UserName,
+                        p.User.ProfilePicturePath)
+                    : null
             ));
 
         return View(models);
@@ -75,23 +77,29 @@ public class PostsController(
         var comments = await mediator.Send(query, cancellationToken);
         var post = comments.Data;
         var models = new PostCommentsDto(
-            new PostViewModel(
+            //posts
+            new CommentsPostViewModel(
                 post.PostId,
                 post.Title,
                 post.Content,
                 post.LikeCount,
                 post.CreationTime,
-                new UserViewModel(
-                    post.User.UserName,
-                    post.User.ProfilePicturePath)),
+                post.User != null
+                    ? new UserViewModel(
+                        post.User.UserName,
+                        post.User.ProfilePicturePath)
+                    : null),
+            //comments
             post.Comments.Select(c => new CommentViewModel(
                 c.CommentId,
                 c.Content,
                 c.LikeCount,
                 c.CreationTime,
-                new UserViewModel(
-                    c.User.UserName,
-                    c.User.ProfilePicturePath))
+                c.User != null
+                    ? new UserViewModel(
+                        c.User.UserName,
+                        c.User.ProfilePicturePath)
+                    : null)
             ).ToArray());
 
         return View(models);
