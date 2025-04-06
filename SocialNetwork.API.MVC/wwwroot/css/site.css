@@ -27,3 +27,26 @@
         transform: translateY(-10px);
         opacity: 0.9;
     }
+
+/* Add any additional styles you need for your buttons */
+.profile-button {
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    outline: none;
+}
+
+    .profile-button:focus,
+    .profile-button:hover {
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6); /* white glow outline */
+    }
+
+.profile-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: block;
+}

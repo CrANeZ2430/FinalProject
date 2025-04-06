@@ -1,16 +1,36 @@
 ﻿@{
-    ViewData["Title"] = "Welcome to SocialNetwork.API.MVC!";
+    ViewData["Title"] = "Welcome to HillelApp!";
 }
 
 <div class="text-center" style="background-color: #f0f8ff; padding: 50px 0;">
     <h1 class="display-4" style="font-size: 3em; color: #333;">@ViewData["Title"]</h1>
     <p style="font-size: 1.25em; color: #555;">
-        A powerful app for building modern web applications with <strong>ASP.NET Core</strong>.
+        A space to connect, share moments, and build your community.
     </p>
     <p style="font-size: 1.1em; color: #666;">
-        Explore and learn more about building web apps with ASP.NET Core by visiting the official documentation.
+        Whether you're here to make new friends or stay in touch with old ones, HillelApp is your digital home.
     </p>
-    <a href="https://learn.microsoft.com/aspnet/core" class="btn btn-primary" style="font-size: 1.2em; padding: 10px 20px; border-radius: 5px; text-decoration: none;">
-        Learn More
+    <a asp-action="Login" asp-controller="Users" class="btn btn-success" style="font-size: 1.2em; padding: 10px 25px; border-radius: 5px;">
+        Join Now
     </a>
 </div>
+
+<!-- Community avatars section -->
+<div class="text-center" style="background-color: #ffffff; padding: 40px 0; border-top: 1px solid #ccc;">
+    <h2 style="font-size: 2em; color: #444;">Meet Our Members</h2>
+    <p style="color: #777; font-size: 1.1em;">Real people. Real connections. Real fun.</p>
+
+    <div class="d-flex justify-content-center align-items-center flex-wrap mt-4" style="gap: 20px;">
+        <img src="https://i.pravatar.cc/60?img=1" class="rounded-circle border" style="width: 60px; height: 60px; object-fit: cover;" alt="User 1" />
+        <img src="https://i.pravatar.cc/60?img=2" class="rounded-circle border" style="width: 60px; height: 60px; object-fit: cover;" alt="User 2" />
+        <img src="https://i.pravatar.cc/60?img=3" class="rounded-circle border" style="width: 60px; height: 60px; object-fit: cover;" alt="User 3" />
+        <img src="https://i.pravatar.cc/60?img=4" class="rounded-circle border" style="width: 60px; height: 60px; object-fit: cover;" alt="User 4" />
+        <img src="https://i.pravatar.cc/60?img=5" class="rounded-circle border" style="width: 60px; height: 60px; object-fit: cover;" alt="User 5" />
+    </div>
+
+    <a asp-action="Login" asp-controller="Users" class="btn btn-outline-primary mt-4" style="font-size: 1.1em; padding: 10px 25px; border-radius: 5px;">
+        Explore the Community
+    </a>
+</div>
+
+
