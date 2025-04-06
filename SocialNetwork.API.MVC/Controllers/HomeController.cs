@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.MVC.Models;
 using System.Diagnostics;
@@ -11,7 +12,8 @@ namespace SocialNetwork.API.MVC.Controllers
             return View();
         }
 
-        public IActionResult EditUserProfile()
+        [Authorize]
+        public IActionResult EditUserProfileForm()
         {
             var model = new UserProfileFormViewModel(
                 "example", 
@@ -20,17 +22,16 @@ namespace SocialNetwork.API.MVC.Controllers
             return View(model);
         }
 
-        public IActionResult ValidationError()
+        [Authorize]
+        public IActionResult AddPostForm()
         {
-            var errorDetails = HttpContext.Items["ErrorDetails"] as object;
-            if (errorDetails != null)
-            {
-                // Pass the error details to the view
-                return View(errorDetails);
-            }
+            var model = new AddPostFormViewModel(
+                "example",
+                "example");
 
-            return View("ErrorGeneric"); // Fallback error view if no specific details
+            return View(model);
         }
+
         public IActionResult AccessDenied()
         {
             return View();

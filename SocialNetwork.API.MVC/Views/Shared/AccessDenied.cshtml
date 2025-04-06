@@ -1,8 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Access Denied";
+    ViewData["Title"] = "Access Issue";
 }
 
-<div class="alert alert-danger">
-    <h3>Access Denied</h3>
-    <p>You do not have permission to access this resource.</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <h1 class="display-5 text-danger">Oops!</h1>
+                    <p class="lead mt-3">
+                        It looks like you don't have permission to view this part of the site,<br />
+                        or the resource you're looking for doesn't exist.
+                    </p>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary mt-4">
+                        Go Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
