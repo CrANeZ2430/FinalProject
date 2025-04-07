@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.MVC.Models.ViewModels;
 using SocialNetwork.Application.Domain.Comments.Commands.CreatePost;
+using SocialNetwork.Application.Domain.Comments.Commands.LikeComment;
 using SocialNetwork.Application.Domain.Comments.Queries.GetUserComments;
+using SocialNetwork.Application.Domain.Posts.Commands.AddLike;
 using System.Security.Claims;
 
 namespace SocialNetwork.API.MVC.Controllers;
@@ -43,5 +45,18 @@ public class CommentsController(IMediator mediator) : Controller
         );
 
         return View(commentModels);
+    }
+
+    public async Task<IActionResult> LikeComment(
+        Guid commentId,
+        Guid postId,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new LikeCommentCommand(
+            commentId,
+            true);
+
+        await mediator.Send(command, cancellationToken);
+        return RedirectToAction("GetPostComments", "Posts", new { postId = postId });
     }
 }

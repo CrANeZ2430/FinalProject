@@ -54,8 +54,9 @@
                             </div>
 
                             <!-- Like Button with Count -->
-                            <form asp-action="LikePost" asp-controller="Posts" method="post" class="d-flex align-items-center">
+                            <form asp-action="LikePost" asp-controller="Posts" class="d-flex align-items-center">
                                 <input type="hidden" name="postId" value="@post.PostId" />
+                                <input type="hidden" name="redirectUrl" value="GetPosts" />
                                 <button type="submit" class="btn btn-outline-success btn-sm d-flex align-items-center">
                                     <i class="fas fa-thumbs-up"></i>
                                     <span class="ms-2">@post.LikeCount</span>

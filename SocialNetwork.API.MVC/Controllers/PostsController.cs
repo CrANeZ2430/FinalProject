@@ -58,6 +58,7 @@ public class PostsController(
 
     public async Task<IActionResult> LikePost(
         Guid postId,
+        string redirectUrl,
         CancellationToken cancellationToken = default)
     {
         var command = new LikePostCommand(
@@ -65,7 +66,7 @@ public class PostsController(
             true);
 
         await mediator.Send(command, cancellationToken);
-        return RedirectToAction("GetPosts", "Posts");
+        return RedirectToAction(redirectUrl, new { postId = postId });
     }
 
     public async Task<IActionResult> GetPostComments(

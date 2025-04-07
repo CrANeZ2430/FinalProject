@@ -33,8 +33,14 @@
         </div>
         <div class="card-footer bg-light d-flex justify-content-between rounded-bottom-4">
             <div>
-                <i class="fas fa-thumbs-up text-success"></i>
-                <span class="ms-2">@Model.Post.LikeCount Likes</span>
+                <form asp-action="LikePost" asp-controller="Posts" class="d-flex align-items-center">
+                    <input type="hidden" name="postId" value="@Model.Post.PostId" />
+                    <input type="hidden" name="redirectUrl" value="GetPostComments" />
+                    <button type="submit" class="btn btn-outline-success btn-sm d-flex align-items-center">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span class="ms-2">@Model.Post.LikeCount Likes</span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -55,6 +61,14 @@
                             <strong>@comment.User.UserName</strong>
                             <small class="text-muted d-block">@comment.CreationTime.ToString("g")</small>
                             <p class="mb-0">@comment.Content</p>
+                            <form asp-action="LikeComment" asp-controller="Comments" class="d-flex align-items-center">
+                                <input type="hidden" name="postId" value="@Model.Post.PostId" />
+                                <input type="hidden" name="commentId" value="@comment.CommentId" />
+                                <button type="submit" class="btn btn-outline-success btn-sm d-flex align-items-center">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span class="ms-2">@comment.LikeCount</span>
+                                </button>
+                            </form>
                         </div>
                     }
                     else
@@ -64,6 +78,7 @@
 							<strong>[нелице]</strong>
                             <small class="text-muted d-block">@comment.CreationTime.ToString("g")</small>
                             <p class="mb-0">@comment.Content</p>
+
                         </div>
                     }
                 </li>
