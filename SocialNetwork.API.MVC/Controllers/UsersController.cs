@@ -57,6 +57,7 @@ public class UsersController(
         var user = await mediator.Send(query, cancellationToken);
 
         var userProfile = new UserProfileViewModel(
+            user.UserId,
             user.UserName,
             user.Email,
             user.ProfilePicturePath,
@@ -73,6 +74,7 @@ public class UsersController(
         var userDetails = await mediator.Send(user, cancellationToken);
 
         var model = new UserProfileViewModel(
+            userDetails.UserId,
             userDetails.UserName,
             userDetails.Email,
             userDetails.ProfilePicturePath,

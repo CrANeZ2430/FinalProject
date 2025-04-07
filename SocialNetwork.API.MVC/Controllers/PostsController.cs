@@ -6,12 +6,13 @@ using SocialNetwork.Application.Domain.Comments.Queries.GetPostComments;
 using SocialNetwork.Application.Domain.Posts.Commands.AddLike;
 using SocialNetwork.Application.Domain.Posts.Commands.CreatePost;
 using SocialNetwork.Application.Domain.Posts.Queries.GetPosts;
+using SocialNetwork.Application.Domain.Posts.Queries.GetUserPosts;
 using System.Security.Claims;
 
 namespace SocialNetwork.API.MVC.Controllers;
 
 public class PostsController(
-    IMediator mediator) 
+    IMediator mediator)
     : Controller
 {
     public async Task<IActionResult> AddPost(
@@ -103,5 +104,29 @@ public class PostsController(
             ).ToArray());
 
         return View(models);
+    }
+
+    public async Task<IActionResult> GetUserPosts(
+        string userId,
+        int page = 1,
+        int pageSize = 10,
+        CancellationToken cancellationToken = default)
+    {
+        var query = new GetUserPostsQuery(page, pageSize, userId);
+        var posts = await mediator.Send(query, cancellationToken);
+
+        var postModels = posts.Data.Select(p => new PostViewModel(
+            p.PostId,
+            p.Title,
+            p.Content,
+            p.LikeCount,
+            p.CommentCount,
+            p.CreationTime,
+            new UserViewModel(
+                p.User.UserName,
+                p.User.ProfilePicturePath)
+            ));
+
+        return View(postModels);
     }
 }

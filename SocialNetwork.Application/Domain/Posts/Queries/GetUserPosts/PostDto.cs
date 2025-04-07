@@ -4,7 +4,10 @@ public record PostDto(
     Guid PostId,
     string Title,
     string Content,
-    string[]? ImagePath,
-    int PostLikeCount,
-    DateTime CreationDate,
-    DateTime UpdateTime);
+    //string[]? ImagePath,
+    int LikeCount,
+    int CommentCount,
+    DateTime CreationTime,
+    UserDto User
+    //DateTime UpdateTime
+    );

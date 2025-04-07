@@ -7,4 +7,4 @@ public record GetUserPostsQuery(
     int Page,
     int PageSize,
     string UserId)
-    : IRequest<PageResponse<UserDto>>;
+    : IRequest<PageResponse<PostDto[]>>;

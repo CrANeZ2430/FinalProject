@@ -8,38 +8,35 @@ namespace SocialNetwork.Infrastructure.Application.Domain.Posts.Queries.GetUserP
 
 public class GetUserPostsQueryHandler(
     SocialNetworkDbContext dbContext)
-    : IRequestHandler<GetUserPostsQuery, PageResponse<UserDto>>
+    : IRequestHandler<GetUserPostsQuery, PageResponse<PostDto[]>>
 {
-    public async Task<PageResponse<UserDto>> Handle(
-        GetUserPostsQuery query, 
+    public async Task<PageResponse<PostDto[]>> Handle(
+        GetUserPostsQuery query,
         CancellationToken cancellationToken = default)
     {
-        var user = await dbContext.Users
-                .AsNoTracking()
-                .Where(u => u.UserId == query.UserId)
-                .Select(u => new UserDto(
-                    u.UserId,
-                    u.UserName,
-                    u.Email,
-                    u.ProfilePicturePath,
-                    u.Bio,
-                    u.CreationTime,
-                    u.Posts
-                        .OrderBy(p => p.CreationTime)
-                        .Skip((query.Page - 1) * query.PageSize)
-                        .Take(query.PageSize)
-                        .Select(p => new PostDto(
-                            p.PostId,
-                            p.Title,
-                            p.Content,
-                            p.ImagePath,
-                            p.LikeCount,
-                            p.CreationTime,
-                            p.UpdateTime))
-                        .ToArray()
-                ))
-                .FirstOrDefaultAsync(cancellationToken);
+        var sqlQuery = dbContext.Posts
+        .AsNoTracking()
+        .Where(c => c.UserId == query.UserId);
 
-        return new PageResponse<UserDto>(user.Posts.Length, user);
+        var totalCount = await sqlQuery.CountAsync(cancellationToken);
+
+        var posts = await sqlQuery
+            .OrderBy(c => c.CreationTime)
+            .Skip((query.Page - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .Select(p => new PostDto(
+                p.PostId,
+                p.Title,
+                p.Content,
+                p.LikeCount,
+                p.Comments.Count(),
+                p.CreationTime,
+                //p.UpdateTime,
+                new UserDto(
+                    p.User.UserName,
+                    p.User.ProfilePicturePath)))
+            .ToArrayAsync(cancellationToken);
+
+        return new PageResponse<PostDto[]>(totalCount, posts);
     }
 }

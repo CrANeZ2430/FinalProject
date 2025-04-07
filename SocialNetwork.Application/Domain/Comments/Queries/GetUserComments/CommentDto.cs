@@ -6,4 +6,5 @@ public record CommentDto(
     int LikeCount,
     DateTime CreationTime,
     DateTime UpdateTime,
-    Guid PostId);
+    Guid PostId,
+    UserDto User);

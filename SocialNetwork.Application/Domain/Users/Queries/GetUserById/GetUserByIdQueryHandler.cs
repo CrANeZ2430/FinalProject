@@ -14,6 +14,7 @@ public class GetUserByIdQueryHandler(
         var user = await usersRepository.GetById(query.UserId, cancellationToken);
 
         return new UserDto(
+            user.UserId,
             user.UserName,
             user.Email,
             user.ProfilePicturePath,

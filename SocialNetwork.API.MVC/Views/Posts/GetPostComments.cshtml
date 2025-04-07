@@ -12,7 +12,7 @@
         <div class="card-header bg-primary text-white d-flex align-items-center gap-3 rounded-top-4">
             @if(Model.Post.User != null && !string.IsNullOrEmpty(Model.Post.User.ProfilePicturePath))
             {
-                <img src="@Model.Post.User.ProfilePicturePath" alt="User Profile" class="rounded-circle border border-white" style="width: 50px; height: 50px; object-fit: cover;">
+                <img src="@Url.Action("ProxyImage", "Utilities", new { url = Model.Post.User.ProfilePicturePath })" alt="User Profile" class="rounded-circle border border-white" style="width: 50px; height: 50px; object-fit: cover;">
                 <div>
                     <h5 class="mb-0">@Model.Post.User.UserName</h5>
                     <small class="text-white-50">@Model.Post.CreationTime.ToString("g")</small>
@@ -50,7 +50,7 @@
                 <li class="list-group-item d-flex align-items-start gap-3">
                     @if (comment.User != null && !string.IsNullOrEmpty(comment.User.ProfilePicturePath))
                     {
-                        <img src="@comment.User.ProfilePicturePath" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                        <img src="@Url.Action("ProxyImage", "Utilities", new { url = comment.User.ProfilePicturePath })" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
                         <div>
                             <strong>@comment.User.UserName</strong>
                             <small class="text-muted d-block">@comment.CreationTime.ToString("g")</small>

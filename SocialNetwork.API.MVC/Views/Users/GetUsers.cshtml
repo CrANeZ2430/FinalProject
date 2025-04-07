@@ -23,7 +23,7 @@
                             <form asp-action="GetUserDetails" asp-controller="Users">
 								<input type="hidden" name="userId" value="@user.UserId"/>
                                 <button type="submit" class="profile-button">
-                                    <img src="@user.ProfilePicturePath" alt="Profile Image" class="profile-image" />
+                                    <img src="@Url.Action("ProxyImage", "Utilities", new { url = user.ProfilePicturePath })" alt="Profile Image" class="profile-image" />
                                 </button>
                             </form>
                         </div>

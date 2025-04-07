@@ -12,7 +12,7 @@
                     <h2>@ViewData["Title"]</h2>
                 </div>
                 <div class="card-body d-flex flex-column align-items-center">
-                    <img src="@Model.ProfilePicturePath" alt="Profile Image" class="profile-image mb-4 rounded-circle border border-4 border-primary" style="width: 150px; height: 150px;">
+                    <img src="@Url.Action("ProxyImage", "Utilities", new { url = Model.ProfilePicturePath })" alt="Profile Image" class="profile-image mb-4 rounded-circle border border-4 border-primary" style="width: 150px; height: 150px;">
                     <div class="user-info text-center">
                         <h3 class="mb-2">@Model.UserName</h3>
                         <p><i class="glyphicon glyphicon-envelope"></i> @Model.Email</p>
