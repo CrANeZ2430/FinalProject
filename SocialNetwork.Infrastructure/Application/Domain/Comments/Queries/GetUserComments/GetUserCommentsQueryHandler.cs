@@ -32,6 +32,7 @@ public class GetUserCommentsQueryHandler(
                 c.UpdateTime,
                 c.PostId,
                 new UserDto(
+                    c.User.UserId,
                     c.User.UserName,
                     c.User.ProfilePicturePath)))
             .ToArrayAsync(cancellationToken);

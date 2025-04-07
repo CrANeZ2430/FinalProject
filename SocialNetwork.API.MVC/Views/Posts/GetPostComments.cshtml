@@ -10,7 +10,7 @@
     <!-- Post Header -->
     <div class="card shadow-lg rounded-4 border-0 mb-4">
         <div class="card-header bg-primary text-white d-flex align-items-center gap-3 rounded-top-4">
-            @if(Model.Post.User != null && !string.IsNullOrEmpty(Model.Post.User.ProfilePicturePath))
+            @if (Model.Post.User != null && !string.IsNullOrEmpty(Model.Post.User.ProfilePicturePath))
             {
                 <img src="@Url.Action("ProxyImage", "Utilities", new { url = Model.Post.User.ProfilePicturePath })" alt="User Profile" class="rounded-circle border border-white" style="width: 50px; height: 50px; object-fit: cover;">
                 <div>
@@ -31,7 +31,7 @@
             <h4 class="card-title fw-bold">@Model.Post.Title</h4>
             <p class="card-text">@Model.Post.Content</p>
         </div>
-        <div class="card-footer bg-light d-flex justify-content-between rounded-bottom-4">
+        <div class="card-footer bg-light d-flex justify-content-between align-items-center rounded-bottom-4">
             <div>
                 <form asp-action="LikePost" asp-controller="Posts" class="d-flex align-items-center">
                     <input type="hidden" name="postId" value="@Model.Post.PostId" />
@@ -42,12 +42,24 @@
                     </button>
                 </form>
             </div>
+
+            <!-- Delete Post Button -->
+            @if (Model.Post.User != null && Model.Post.User.UserId == User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)
+            {
+                <form asp-action="DeletePost" asp-controller="Posts" method="post" class="d-flex align-items-center">
+                    <input type="hidden" name="postId" value="@Model.Post.PostId" />
+                    <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center">
+                        <i class="bi bi-trash"></i>
+                        <span class="ms-2">Delete Post</span>
+                    </button>
+                </form>
+            }
         </div>
     </div>
 
     <!-- Comments Section -->
     <h5 class="text-secondary mb-3">Comments (@Model.Comments.Length)</h5>
-    
+
     @if (Model.Comments.Any())
     {
         <ul class="list-group mb-4">
@@ -75,11 +87,23 @@
                     {
                         <i class="bi bi-person-circle" style="font-size: 50px;"></i>
                         <div>
-							<strong>[нелице]</strong>
+                            <strong>[нелице]</strong>
                             <small class="text-muted d-block">@comment.CreationTime.ToString("g")</small>
                             <p class="mb-0">@comment.Content</p>
-
                         </div>
+                    }
+
+                    <!-- Delete Comment Button -->
+                    @if (comment.User != null && comment.User.UserId == User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value)
+                    {
+                        <form asp-action="DeleteComment" asp-controller="Comments" method="post" class="d-flex align-items-center mt-2">
+                        <input type="hidden" name="postId" value="@Model.Post.PostId" />
+                        <input type="hidden" name="commentId" value="@comment.CommentId" />
+                        <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center">
+                            <i class="bi bi-trash"></i>
+                            <span class="ms-2">Delete Comment</span>
+                        </button>
+                    </form>                        
                     }
                 </li>
             }
@@ -102,4 +126,3 @@
         <button type="submit" class="btn btn-primary">Submit Comment</button>
     </form>
 </div>
-

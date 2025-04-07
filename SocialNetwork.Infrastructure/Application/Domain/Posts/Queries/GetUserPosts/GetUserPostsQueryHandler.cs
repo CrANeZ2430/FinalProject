@@ -33,6 +33,7 @@ public class GetUserPostsQueryHandler(
                 p.CreationTime,
                 //p.UpdateTime,
                 new UserDto(
+                    p.User.UserId,
                     p.User.UserName,
                     p.User.ProfilePicturePath)))
             .ToArrayAsync(cancellationToken);

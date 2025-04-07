@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.MVC.Models.ViewModels;
 using SocialNetwork.Application.Domain.Comments.Commands.CreatePost;
+using SocialNetwork.Application.Domain.Comments.Commands.DeleteComment;
 using SocialNetwork.Application.Domain.Comments.Commands.LikeComment;
 using SocialNetwork.Application.Domain.Comments.Queries.GetUserComments;
 using SocialNetwork.Application.Domain.Posts.Commands.AddLike;
@@ -11,20 +12,6 @@ namespace SocialNetwork.API.MVC.Controllers;
 
 public class CommentsController(IMediator mediator) : Controller
 {
-    public async Task<IActionResult> AddComment(
-        Guid postId,
-        string Content,
-        CancellationToken cancellationToken = default)
-    {
-        var command = new CreateCommentCommand(
-            User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
-            postId,
-            Content);
-        await mediator.Send(command, cancellationToken);
-        
-        return RedirectToAction("GetPostComments", "Posts", new { postId = postId });
-    }
-
     public async Task<IActionResult> GetUserComments(
         string userId,
         int page = 1,
@@ -40,11 +27,26 @@ public class CommentsController(IMediator mediator) : Controller
             c.LikeCount,
             c.CreationTime,
             new UserViewModel(
+                c.User.UserId,
                 c.User.UserName,
                 c.User.ProfilePicturePath))
         );
 
         return View(commentModels);
+    }
+
+    public async Task<IActionResult> AddComment(
+        Guid postId,
+        string Content,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new CreateCommentCommand(
+            User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
+            postId,
+            Content);
+        await mediator.Send(command, cancellationToken);
+
+        return RedirectToAction("GetPostComments", "Posts", new { postId = postId });
     }
 
     public async Task<IActionResult> LikeComment(
@@ -55,6 +57,18 @@ public class CommentsController(IMediator mediator) : Controller
         var command = new LikeCommentCommand(
             commentId,
             true);
+
+        await mediator.Send(command, cancellationToken);
+        return RedirectToAction("GetPostComments", "Posts", new { postId = postId });
+    }
+
+    public async Task<IActionResult> DeleteComment(
+        Guid commentId,
+        Guid postId,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new DeleteCommentCommand(
+            commentId);
 
         await mediator.Send(command, cancellationToken);
         return RedirectToAction("GetPostComments", "Posts", new { postId = postId });

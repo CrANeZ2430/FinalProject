@@ -7,4 +7,5 @@ public interface ICommentsRepository
     void Add(Comment comment);
     void Remove(Comment comment);
     Task<Comment> GetById(Guid commentId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<Comment>> GetAll(Guid postId, CancellationToken cancellationToken = default);
 }

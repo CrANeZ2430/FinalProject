@@ -24,4 +24,11 @@ internal class CommentsRepository(SocialNetworkDbContext dbContext) : ICommentsR
                     .FirstOrDefaultAsync(x => x.CommentId == commentId, cancellationToken)
                     ?? throw new NotFoundException($"{nameof(Comment)} cannot be found."); ;
     }
+
+    public async Task<IEnumerable<Comment>> GetAll(Guid postId, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Comments
+                    .Where(x => x.PostId == postId)
+                    .ToListAsync(cancellationToken);
+    }
 }

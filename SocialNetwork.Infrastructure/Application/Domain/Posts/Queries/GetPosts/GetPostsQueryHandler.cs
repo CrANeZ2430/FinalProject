@@ -30,6 +30,7 @@ public class GetPostsQueryHandler(
                 //p.UpdateTime,
                 p.User != null
                     ? new UserDto(
+                        p.User.UserId,
                         p.User.UserName,
                         p.User.ProfilePicturePath)
                     : null))

@@ -26,7 +26,10 @@ public class GetPostCommentsQueryHandler(
             .Select(c => new CommentDto(
                 c.CommentId,
                 c.User != null
-                    ? new UserDto(c.User.UserName, c.User.ProfilePicturePath)
+                    ? new UserDto(
+                        c.User.UserId,
+                        c.User.UserName, 
+                        c.User.ProfilePicturePath)
                     : null,
                 c.Content,
                 c.LikeCount,
@@ -48,6 +51,7 @@ public class GetPostCommentsQueryHandler(
             postEntity.CreationTime,
             postEntity.User != null
             ? new UserDto(
+                postEntity.User.UserId,
                 postEntity.User.UserName,
                 postEntity.User.ProfilePicturePath)
             : null,
