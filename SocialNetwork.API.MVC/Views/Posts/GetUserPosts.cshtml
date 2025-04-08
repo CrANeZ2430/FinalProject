@@ -31,15 +31,36 @@
                             <h5 class="card-title mb-2">@post.Title</h5>
                             <p class="card-text mb-3">@post.Content</p>
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center gap-3">
-                                    <span class="badge bg-success d-flex align-items-center">
-                                        <i class="bi bi-hand-thumbs-up me-1"></i>@post.LikeCount
-                                    </span>
-                                    <span class="badge bg-primary d-flex align-items-center">
-                                        <i class="bi bi-chat-right-text me-1"></i>@post.CommentCount
-                                    </span>
+                            @if (post.Images != null && post.Images.Any())
+                            {
+                                <div id="carousel-@post.PostId" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        @foreach (var image in post.Images)
+                                        {
+                                            <div class="carousel-item @(post.Images.First() == image ? "active" : "")">
+                                                <img src="@Url.Action("ProxyImage", "Utilities", new { url = image })"
+                                                     class="d-block w-100"
+                                                     alt="Post Image" style="max-height: 250px; object-fit: cover;">
+                                            </div>
+                                        }
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-@post.PostId" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-@post.PostId" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
                                 </div>
+                            }
+                            <div class="d-flex align-items-center gap-3 p-2">
+                                <span class="badge bg-success d-flex align-items-center p-2">
+                                    <i class="bi bi-hand-thumbs-up me-1"></i>@post.LikeCount
+                                </span>
+                                <span class="badge bg-primary d-flex align-items-center p-2">
+                                    <i class="bi bi-chat-right-text me-1"></i>@post.CommentCount
+                                </span>
                             </div>
                         </div>
                     </div>
