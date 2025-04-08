@@ -1,4 +1,6 @@
 ﻿using Auth0.AspNetCore.Authentication;
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,11 +13,14 @@ using SocialNetwork.Application.Domain.Users.Commands.UpdateUser;
 using SocialNetwork.Application.Domain.Users.Queries.GetUserById;
 using SocialNetwork.Application.Domain.Users.Queries.GetUsers;
 using System.Security.Claims;
+using SocialNetwork.API.MVC.Services;
+using SocialNetwork.Application.Domain.Users.Commands.UpdateUserProfilePicture;
 
 namespace SocialNetwork.API.MVC.Controllers;
 
 public class UsersController(
-    IMediator mediator)
+    IMediator mediator,
+    IPhotoService photoService)
     : Controller
 {
     public async Task Login(string returnUrl = "/", CancellationToken cancellationToken = default)
@@ -160,5 +165,32 @@ public class UsersController(
 
         await HttpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    }
+
+    [Authorize]
+    public async Task<IActionResult> UploadProfilePicture(
+        IFormFile profilePicture,
+        string profilePicturePath,
+        string userId,
+        CancellationToken cancellationToken = default)
+    {
+        if (profilePicture == null || profilePicture.Length == 0)
+        {
+            TempData["Error"] = "No image selected.";
+            return RedirectToAction("UserProfile", "Users");
+        }
+
+        var pictureName = profilePicturePath.Split('/').Last();
+        await photoService.DeletePhotoAsync(pictureName);
+
+        var uploadResult = await photoService.AddPhotoAsync(profilePicture);
+        var url = uploadResult.SecureUrl.ToString();
+
+        var command = new UpdateUserProfilePictureCommand(
+            userId,
+            url);
+        await mediator.Send(command, cancellationToken);
+
+        return RedirectToAction("UserProfile", "Users");
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.MVC.Models.ViewModels;
 using SocialNetwork.Application.Domain.Comments.Commands.CreatePost;
@@ -35,6 +36,7 @@ public class CommentsController(IMediator mediator) : Controller
         return View(commentModels);
     }
 
+    [Authorize]
     public async Task<IActionResult> AddComment(
         Guid postId,
         string Content,
@@ -49,6 +51,7 @@ public class CommentsController(IMediator mediator) : Controller
         return RedirectToAction("GetPostComments", "Posts", new { postId = postId });
     }
 
+    [Authorize]
     public async Task<IActionResult> LikeComment(
         Guid commentId,
         Guid postId,
@@ -62,6 +65,7 @@ public class CommentsController(IMediator mediator) : Controller
         return RedirectToAction("GetPostComments", "Posts", new { postId = postId });
     }
 
+    [Authorize]
     public async Task<IActionResult> DeleteComment(
         Guid commentId,
         Guid postId,

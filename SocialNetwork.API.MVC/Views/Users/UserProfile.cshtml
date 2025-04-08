@@ -42,6 +42,18 @@
                             </form>
                         </div>
                     </div>
+
+                    <div class="upload-section mt-5 text-center">
+                        <h4 class="text-primary mb-3">Upload New Profile Picture</h4>
+                        <p class="text-muted mb-4">Select a new image to update your profile picture. JPG, PNG, and GIF formats are supported.</p>
+
+                        <form asp-action="UploadProfilePicture" asp-controller="Users" enctype="multipart/form-data" class="d-flex flex-column align-items-center">
+                            <input type="file" name="profilePicture" accept="image/*" class="form-control mb-3 shadow-sm" style="max-width: 320px;" required />
+                            <input type="hidden" name="profilePicturePath" value="@Model.ProfilePicturePath" />
+							<input type="hidden" name="userId" value="@Model.UserId" />
+                            <button type="submit" class="btn btn-outline-primary px-4 py-2">Upload Image</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

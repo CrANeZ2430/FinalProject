@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.MVC.Models.Dtos;
 using SocialNetwork.API.MVC.Models.ViewModels;
@@ -106,6 +107,7 @@ public class PostsController(
         return View(postModels);
     }
 
+    [Authorize]
     public async Task<IActionResult> AddPost(
         AddPostFormViewModel model,
         CancellationToken cancellationToken = default)
@@ -123,6 +125,7 @@ public class PostsController(
         return RedirectToAction("Index", "Home");
     }
 
+    [Authorize]
     public async Task<IActionResult> LikePost(
         Guid postId,
         string redirectUrl,
@@ -136,6 +139,7 @@ public class PostsController(
         return RedirectToAction(redirectUrl, new { postId = postId });
     }
 
+    [Authorize]
     public async Task<IActionResult> DeletePost(
         Guid postId,
         string redirectUrl,

@@ -1,4 +1,5 @@
 using Auth0.AspNetCore.Authentication;
+using SocialNetwork.API.MVC.Services;
 using SocialNetwork.Application;
 using SocialNetwork.Infrastructure;
 using SocialNetwork.Infrastructure.Middleware;
@@ -20,6 +21,7 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.Scope = "openid profile email";
 });
 
+builder.Services.RegisterApiServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 builder.Services.RegisterSocialNetworkDbContext(builder.Configuration);

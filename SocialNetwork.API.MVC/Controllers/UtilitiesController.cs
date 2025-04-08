@@ -7,9 +7,6 @@ public class UtilitiesController : Controller
     public async Task<IActionResult> ProxyImage(
         [FromQuery] string url)
     {
-        if (!url.StartsWith("https://lh3.googleusercontent.com/"))
-            return BadRequest("URL not allowed.");
-
         using var httpClient = new HttpClient();
         var response = await httpClient.GetAsync(url);
 
