@@ -18,7 +18,7 @@ public class UpdatePostDataValidator : AbstractValidator<UpdatePostData>
             .MaximumLength(500).WithMessage($"{nameof(UpdatePostData.Content)} must be at most 500 characters.");
 
         RuleFor(post => post.ImagePath)
-            .Must(paths => paths == null || paths.All(p => Uri.IsWellFormedUriString(p, UriKind.Relative)))
-            .WithMessage($"Each {nameof(UpdatePostData.ImagePath)} must be a valid relative URI.");
+            .Must(paths => paths == null || paths.All(p => Uri.IsWellFormedUriString(p, UriKind.Absolute)))
+            .WithMessage($"Each {nameof(UpdatePostData.ImagePath)} must be a valid absolute URI.");
     }
 }

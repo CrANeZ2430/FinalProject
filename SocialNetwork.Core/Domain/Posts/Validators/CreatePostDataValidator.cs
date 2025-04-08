@@ -18,8 +18,8 @@ public class CreatePostDataValidator : AbstractValidator<CreatePostData>
             .MaximumLength(500).WithMessage($"{nameof(CreatePostData.Content)} must be at at most 500 characters.");
 
         RuleFor(post => post.ImagePath)
-            .Must(paths => paths == null || paths.All(p => Uri.IsWellFormedUriString(p, UriKind.Relative)))
-            .WithMessage($"Each {nameof(CreatePostData.ImagePath)} must be a valid relative URI.");
+            .Must(paths => paths == null || paths.All(p => Uri.IsWellFormedUriString(p, UriKind.Absolute)))
+            .WithMessage($"Each {nameof(CreatePostData.ImagePath)} must be a valid absolute URI.");
 
         RuleFor(post => post.UserId)
             .CustomAsync(async (userId, context, cancellationToken) =>

@@ -29,7 +29,8 @@ public class HomeController(
     {
         var model = new AddPostFormViewModel(
             "example",
-            "example");
+            "example",
+            null);
 
         return View(model);
     }

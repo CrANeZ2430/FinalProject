@@ -28,6 +28,7 @@ public class GetUserPostsQueryHandler(
                 p.PostId,
                 p.Title,
                 p.Content,
+                p.ImagePath,
                 p.LikeCount,
                 p.Comments.Count(),
                 p.CreationTime,

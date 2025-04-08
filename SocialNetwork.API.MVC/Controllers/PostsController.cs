@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SocialNetwork.API.MVC.Models.Dtos;
 using SocialNetwork.API.MVC.Models.ViewModels;
+using SocialNetwork.API.MVC.Services;
 using SocialNetwork.Application.Domain.Comments.Queries.GetPostComments;
 using SocialNetwork.Application.Domain.Posts.Commands.AddLike;
 using SocialNetwork.Application.Domain.Posts.Commands.CreatePost;
@@ -14,7 +15,8 @@ using System.Security.Claims;
 namespace SocialNetwork.API.MVC.Controllers;
 
 public class PostsController(
-    IMediator mediator)
+    IMediator mediator,
+    IPhotoService photoService)
     : Controller
 {
     public async Task<IActionResult> GetPosts(
@@ -28,6 +30,7 @@ public class PostsController(
             p.PostId,
             p.Title,
             p.Content,
+            p.ImagePath,
             p.LikeCount,
             p.CommentCount,
             p.CreationTime,
@@ -57,6 +60,7 @@ public class PostsController(
                 post.PostId,
                 post.Title,
                 post.Content,
+                post.ImagePath,
                 post.LikeCount,
                 post.CreationTime,
                 post.User != null
@@ -95,6 +99,7 @@ public class PostsController(
             p.PostId,
             p.Title,
             p.Content,
+            p.ImagePath,
             p.LikeCount,
             p.CommentCount,
             p.CreationTime,
@@ -114,10 +119,20 @@ public class PostsController(
     {
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
+        var images = new List<string>();
+        if (model.Images != null || model.Images.Length > 0)
+        {
+            foreach (var image in model.Images)
+            {
+                var imagePath = photoService.AddPhotoAsync(image).Result;
+                images.Add(imagePath.SecureUrl.ToString());
+            }
+        }
+
         var command = new CreatePostCommand(
             model.Title,
             model.Content,
-            null,
+            images.ToArray(),
             userId);
 
         await mediator.Send(command, cancellationToken);

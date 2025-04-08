@@ -2,4 +2,5 @@
 
 public record AddPostFormViewModel(
     string Title,
-    string Content);
+    string Content,
+    IFormFile[] Images);

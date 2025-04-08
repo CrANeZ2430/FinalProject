@@ -46,6 +46,31 @@
                         <div class="card-body">
                             <h5 class="card-title">@post.Title</h5>
                             <p class="card-text">@post.Content</p>
+
+                            <!-- Display Post Images -->
+                            @if (post.Images != null && post.Images.Any())
+                            {
+                                <div id="carousel-@post.PostId" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        @foreach (var image in post.Images)
+                                        {
+                                            <div class="carousel-item @(post.Images.First() == image ? "active" : "")">
+                                                <img src="@Url.Action("ProxyImage", "Utilities", new { url = image })"
+                                                     class="d-block w-100"
+                                                     alt="Post Image" style="max-height: 250px; object-fit: cover;">
+                                            </div>
+                                        }
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-@post.PostId" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-@post.PostId" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            }
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-center bg-light rounded-bottom-4">
                             <!-- Comment Icon and Count -->
@@ -92,4 +117,3 @@
         <div class="alert alert-warning text-center">No posts to display.</div>
     }
 </div>
-

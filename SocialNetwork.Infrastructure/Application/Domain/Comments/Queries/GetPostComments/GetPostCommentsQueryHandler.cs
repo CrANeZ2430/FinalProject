@@ -47,6 +47,7 @@ public class GetPostCommentsQueryHandler(
             postEntity.PostId,
             postEntity.Title,
             postEntity.Content,
+            postEntity.ImagePath,
             postEntity.LikeCount,
             postEntity.CreationTime,
             postEntity.User != null

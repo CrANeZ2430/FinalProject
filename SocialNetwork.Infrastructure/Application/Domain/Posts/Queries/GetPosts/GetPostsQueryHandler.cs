@@ -23,7 +23,7 @@ public class GetPostsQueryHandler(
                 p.PostId,
                 p.Title,
                 p.Content,
-                //p.ImagePath,
+                p.ImagePath,
                 p.LikeCount,
                 p.Comments.Count(),
                 p.CreationTime,

@@ -4,6 +4,7 @@ public record CommentsPostViewModel(
     Guid PostId,
     string Title,
     string Content,
+    string[]? Images,
     int LikeCount,
     DateTime CreationTime,
     UserViewModel User);
