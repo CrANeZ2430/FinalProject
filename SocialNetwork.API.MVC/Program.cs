@@ -7,6 +7,7 @@ using SocialNetwork.Persistence.SocialNetworkDb;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// small comment
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
