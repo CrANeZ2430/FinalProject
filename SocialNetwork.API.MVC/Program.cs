@@ -38,10 +38,10 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseCustomExceptionHandler(app.Environment);
+    //app.UseCustomExceptionHandler(app.Environment);
 }
 
-app.UseStatusCodePagesWithReExecute("/Home/AccessDenied");
+//app.UseStatusCodePagesWithReExecute("/Home/AccessDenied");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -54,5 +54,21 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "getUserDetails",
+    pattern: "{controller=Users}/{action=GetUserDetails}/{userId}");
+
+app.MapControllerRoute(
+    name: "getPostComments",
+    pattern: "{controller=Posts}/{action=GetPostComments}/{postId}");
+
+app.MapControllerRoute(
+    name: "getUserPosts",
+    pattern: "{controller=Posts}/{action=GetUserPosts}/{userId}");
+
+app.MapControllerRoute(
+    name: "getUserComments",
+    pattern: "{controller=Comments}/{action=GetUserComments}/{userId}");
 
 app.Run();

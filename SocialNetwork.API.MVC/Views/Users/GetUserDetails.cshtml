@@ -31,14 +31,14 @@
                 </div>
                 <div class="user-buttons">
                     <div class="user-button">
-                        <form asp-action="GetUserPosts" asp-controller="Posts" class="mt-4">
+                        <form asp-action="GetUserPosts" asp-controller="Posts" method="get" class="mt-4">
 							<input type="hidden" name="userId" value="@Model.UserId" />
                             <button type="submit" class="btn btn-warning btn-lg">Posts</button>
                         </form>
                     </div>
 
                     <div class="user-button">
-                        <form asp-action="GetUserComments" asp-controller="Comments" class="mt-4">
+                        <form asp-action="GetUserComments" asp-controller="Comments" method="get" class="mt-4">
                             <input type="hidden" name="userId" value="@Model.UserId" />
                             <button type="submit" class="btn btn-warning btn-lg">Comments</button>
                         </form>

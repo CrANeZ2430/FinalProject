@@ -120,7 +120,7 @@ public class PostsController(
         var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
         var images = new List<string>();
-        if (model.Images != null || model.Images.Length > 0)
+        if (model.Images != null && model.Images.Length > 0)
         {
             foreach (var image in model.Images)
             {
@@ -137,7 +137,7 @@ public class PostsController(
 
         await mediator.Send(command, cancellationToken);
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("GetPosts", "Posts");
     }
 
     [Authorize]

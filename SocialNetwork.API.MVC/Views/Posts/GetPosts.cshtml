@@ -20,9 +20,9 @@
                             @if (post.User != null && !string.IsNullOrEmpty(post.User.ProfilePicturePath))
                             {
                                 <img src="@Url.Action("ProxyImage", "Utilities", new { url = post.User.ProfilePicturePath })"
-                                     alt="User Profile"
-                                     class="rounded-circle border border-white"
-                                     style="width: 50px; height: 50px; object-fit: cover;">
+                                alt="User Profile"
+                                class="rounded-circle border border-white"
+                                style="width: 50px; height: 50px; object-fit: cover;">
                             }
                             else
                             {
@@ -56,19 +56,22 @@
                                         {
                                             <div class="carousel-item @(post.Images.First() == image ? "active" : "")">
                                                 <img src="@Url.Action("ProxyImage", "Utilities", new { url = image })"
-                                                     class="d-block w-100"
-                                                     alt="Post Image" style="max-height: 250px; object-fit: cover;">
+                                                class="d-block w-100"
+                                                alt="Post Image" style="max-height: 250px; object-fit: cover;">
                                             </div>
                                         }
                                     </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-@post.PostId" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-@post.PostId" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
+                                    @if (post.Images.Length > 1)
+                                    {
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-@post.PostId" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-@post.PostId" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    }
                                 </div>
                             }
                         </div>
@@ -90,7 +93,7 @@
                             </form>
 
                             <!-- View Comments Button -->
-                            <form asp-action="GetPostComments" asp-controller="Posts">
+                            <form asp-action="GetPostComments" asp-controller="Posts" method="get">
                                 <input type="hidden" name="postId" value="@post.PostId" />
                                 <button class="btn btn-outline-primary btn-sm">View Comments</button>
                             </form>

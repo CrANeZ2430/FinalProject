@@ -1,6 +1,4 @@
 ﻿using Auth0.AspNetCore.Authentication;
-using CloudinaryDotNet.Actions;
-using CloudinaryDotNet;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

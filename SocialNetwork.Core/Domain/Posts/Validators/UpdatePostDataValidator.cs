@@ -10,11 +10,11 @@ public class UpdatePostDataValidator : AbstractValidator<UpdatePostData>
     {
         RuleFor(post => post.Title)
             .NotEmpty().WithMessage($"{nameof(UpdatePostData.Title)} is required.")
+            .MinimumLength(10).WithMessage($"{nameof(UpdatePostData.Content)} must be at least 10 characters.")
             .MaximumLength(50).WithMessage($"{nameof(UpdatePostData.Title)} must be at most 50 characters.");
 
         RuleFor(post => post.Content)
             .NotEmpty().WithMessage($"{nameof(UpdatePostData.Content)} is required.")
-            .MinimumLength(10).WithMessage($"{nameof(UpdatePostData.Content)} must be at least 10 characters.")
             .MaximumLength(500).WithMessage($"{nameof(UpdatePostData.Content)} must be at most 500 characters.");
 
         RuleFor(post => post.ImagePath)
