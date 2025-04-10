@@ -38,10 +38,10 @@ if (!app.Environment.IsDevelopment())
 }
 else
 {
-    //app.UseCustomExceptionHandler(app.Environment);
+    app.UseCustomExceptionHandler(app.Environment);
 }
 
-//app.UseStatusCodePagesWithReExecute("/Home/AccessDenied");
+app.UseStatusCodePagesWithReExecute("/Home/AccessDenied");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
